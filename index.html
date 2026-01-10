@@ -1,221 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Thanjavur Land Zone Locator</title>
-
-<style>
-body {
-  margin: 0;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(135deg, #14532d, #052e16);
-  font-family: "Segoe UI", sans-serif;
-  color: #ecfdf5;
-}
-
-.card {
-  width: 420px;
-  background: #022c22;
-  padding: 26px;
-  border-radius: 16px;
-  box-shadow: 0 18px 45px rgba(0,0,0,0.6);
-  text-align: center;
-}
-
-h2 {
-  margin-bottom: 6px;
-}
-
-.sub {
-  font-size: 14px;
-  color: #a7f3d0;
-  margin-bottom: 18px;
-}
-
-button {
-  background: #22c55e;
-  border: none;
-  padding: 10px 22px;
-  margin: 6px;
-  font-size: 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  color: #052e16;
-  font-weight: 600;
-}
-
-button:hover {
-  background: #16a34a;
-}
-
-.info {
-  margin-top: 18px;
-  font-size: 15px;
-  line-height: 1.6;
-}
-
-.zone {
-  margin-top: 16px;
-  font-size: 18px;
-  font-weight: 700;
-  color: #facc15;
-}
-
-.status {
-  margin-top: 10px;
-  font-size: 13px;
-  color: #bbf7d0;
-}
-</style>
+  <meta charset="UTF-8">
+  <title>Zone Detection System</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    button {
+      padding: 10px 18px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    #output {
+      margin-top: 15px;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+  </style>
 </head>
-
 <body>
 
-<div class="card">
-  <h2>🌾 Thanjavur Land Zone</h2>
-  <div class="sub">Live Farmer Location Tracker</div>
+  <h2>Zone Detector</h2>
+  <button onclick="getLocation()">Check My Zone</button>
 
-  <button onclick="startTracking()">Start Tracking</button>
-  <button onclick="stopTracking()">Stop</button>
+  <div id="output"></div>
 
-  <div class="info" id="location">
-    Latitude: -- <br>
-    Longitude: --
-  </div>
+  <script>
+    /* =========================
+       📍 ALL 53 ZONES DATA
+       ========================= */
+    const zones = [
+      {zone:1, left:79.37824729, top:11.18198544, right:79.47824729, bottom:11.08198544},
+      {zone:2, left:79.47824729, top:11.18198544, right:79.57824729, bottom:11.08198544},
+      {zone:3, left:79.17824729, top:11.08198544, right:79.27824729, bottom:10.98198544},
+      {zone:4, left:79.27824729, top:11.08198544, right:79.37824729, bottom:10.98198544},
+      {zone:5, left:79.37824729, top:11.08198544, right:79.47824729, bottom:10.98198544},
+      {zone:6, left:79.47824729, top:11.08198544, right:79.57824729, bottom:10.98198544},
+      {zone:7, left:78.87824729, top:10.98198544, right:78.97824729, bottom:10.88198544},
+      {zone:8, left:78.97824729, top:10.98198544, right:79.07824729, bottom:10.88198544},
+      {zone:9, left:79.07824729, top:10.98198544, right:79.17824729, bottom:10.88198544},
+      {zone:10, left:79.17824729, top:10.98198544, right:79.27824729, bottom:10.88198544},
+      {zone:11, left:79.27824729, top:10.98198544, right:79.37824729, bottom:10.88198544},
+      {zone:12, left:79.37824729, top:10.98198544, right:79.47824729, bottom:10.88198544},
+      {zone:13, left:79.47824729, top:10.98198544, right:79.57824729, bottom:10.88198544},
+      {zone:14, left:78.77824729, top:10.88198544, right:78.87824729, bottom:10.78198544},
+      {zone:15, left:78.87824729, top:10.88198544, right:78.97824729, bottom:10.78198544},
+      {zone:16, left:78.97824729, top:10.88198544, right:79.07824729, bottom:10.78198544},
+      {zone:17, left:79.07824729, top:10.88198544, right:79.17824729, bottom:10.78198544},
+      {zone:18, left:79.17824729, top:10.88198544, right:79.27824729, bottom:10.78198544},
+      {zone:19, left:79.27824729, top:10.88198544, right:79.37824729, bottom:10.78198544},
+      {zone:20, left:79.37824729, top:10.88198544, right:79.47824729, bottom:10.78198544},
+      {zone:21, left:79.47824729, top:10.88198544, right:79.57824729, bottom:10.78198544},
+      {zone:22, left:78.77824729, top:10.78198544, right:78.87824729, bottom:10.68198544},
+      {zone:23, left:78.87824729, top:10.78198544, right:78.97824729, bottom:10.68198544},
+      {zone:24, left:78.97824729, top:10.78198544, right:79.07824729, bottom:10.68198544},
+      {zone:25, left:79.07824729, top:10.78198544, right:79.17824729, bottom:10.68198544},
+      {zone:26, left:79.17824729, top:10.78198544, right:79.27824729, bottom:10.68198544},
+      {zone:27, left:79.27824729, top:10.78198544, right:79.37824729, bottom:10.68198544},
+      {zone:28, left:78.87824729, top:10.68198544, right:78.97824729, bottom:10.58198544},
+      {zone:29, left:78.97824729, top:10.68198544, right:79.07824729, bottom:10.58198544},
+      {zone:30, left:79.07824729, top:10.68198544, right:79.17824729, bottom:10.58198544},
+      {zone:31, left:79.17824729, top:10.68198544, right:79.27824729, bottom:10.58198544},
+      {zone:32, left:79.27824729, top:10.68198544, right:79.37824729, bottom:10.58198544},
+      {zone:33, left:79.37824729, top:10.68198544, right:79.47824729, bottom:10.58198544},
+      {zone:34, left:79.07824729, top:10.58198544, right:79.17824729, bottom:10.48198544},
+      {zone:35, left:79.17824729, top:10.58198544, right:79.27824729, bottom:10.48198544},
+      {zone:36, left:79.27824729, top:10.58198544, right:79.37824729, bottom:10.48198544},
+      {zone:37, left:79.37824729, top:10.58198544, right:79.47824729, bottom:10.48198544},
+      {zone:38, left:79.47824729, top:10.58198544, right:79.57824729, bottom:10.48198544},
+      {zone:39, left:79.07824729, top:10.48198544, right:79.17824729, bottom:10.38198544},
+      {zone:40, left:79.17824729, top:10.48198544, right:79.27824729, bottom:10.38198544},
+      {zone:41, left:79.27824729, top:10.48198544, right:79.37824729, bottom:10.38198544},
+      {zone:42, left:79.37824729, top:10.48198544, right:79.47824729, bottom:10.38198544},
+      {zone:43, left:79.47824729, top:10.48198544, right:79.57824729, bottom:10.38198544},
+      {zone:44, left:79.07824729, top:10.38198544, right:79.17824729, bottom:10.28198544},
+      {zone:45, left:79.17824729, top:10.38198544, right:79.27824729, bottom:10.28198544},
+      {zone:46, left:79.27824729, top:10.38198544, right:79.37824729, bottom:10.28198544},
+      {zone:47, left:79.37824729, top:10.38198544, right:79.47824729, bottom:10.28198544},
+      {zone:48, left:79.47824729, top:10.38198544, right:79.57824729, bottom:10.28198544},
+      {zone:49, left:79.07824729, top:10.28198544, right:79.17824729, bottom:10.18198544},
+      {zone:50, left:79.17824729, top:10.28198544, right:79.27824729, bottom:10.18198544},
+      {zone:51, left:79.27824729, top:10.28198544, right:79.37824729, bottom:10.18198544},
+      {zone:52, left:79.07824729, top:10.18198544, right:79.17824729, bottom:10.08198544},
+      {zone:53, left:79.17824729, top:10.18198544, right:79.27824729, bottom:10.08198544}
+    ];
 
-  <div class="zone" id="zoneText">Zone: --</div>
-  <div class="status" id="status">Status: Idle</div>
-</div>
-
-<script>
-let watchId = null;
-
-/* ---------------- ZONE DATA (53 ZONES) ---------------- */
-const zones = [
-  {id:1,left:79.37824729,right:79.47824729,top:11.18198544,bottom:11.08198544},
-  {id:2,left:79.47824729,right:79.57824729,top:11.18198544,bottom:11.08198544},
-  {id:3,left:79.17824729,right:79.27824729,top:11.08198544,bottom:10.98198544},
-  {id:4,left:79.27824729,right:79.37824729,top:11.08198544,bottom:10.98198544},
-  {id:5,left:79.37824729,right:79.47824729,top:11.08198544,bottom:10.98198544},
-  {id:6,left:79.47824729,right:79.57824729,top:11.08198544,bottom:10.98198544},
-  {id:7,left:78.87824729,right:78.97824729,top:10.98198544,bottom:10.88198544},
-  {id:8,left:78.97824729,right:79.07824729,top:10.98198544,bottom:10.88198544},
-  {id:9,left:79.07824729,right:79.17824729,top:10.98198544,bottom:10.88198544},
-  {id:10,left:79.17824729,right:79.27824729,top:10.98198544,bottom:10.88198544},
-  {id:11,left:79.27824729,right:79.37824729,top:10.98198544,bottom:10.88198544},
-  {id:12,left:79.37824729,right:79.47824729,top:10.98198544,bottom:10.88198544},
-  {id:13,left:79.47824729,right:79.57824729,top:10.98198544,bottom:10.88198544},
-  {id:14,left:78.77824729,right:78.87824729,top:10.88198544,bottom:10.78198544},
-  {id:15,left:78.87824729,right:78.97824729,top:10.88198544,bottom:10.78198544},
-  {id:16,left:78.97824729,right:79.07824729,top:10.88198544,bottom:10.78198544},
-  {id:17,left:79.07824729,right:79.17824729,top:10.88198544,bottom:10.78198544},
-  {id:18,left:79.17824729,right:79.27824729,top:10.88198544,bottom:10.78198544},
-  {id:19,left:79.27824729,right:79.37824729,top:10.88198544,bottom:10.78198544},
-  {id:20,left:79.37824729,right:79.47824729,top:10.88198544,bottom:10.78198544},
-  {id:21,left:79.47824729,right:79.57824729,top:10.88198544,bottom:10.78198544},
-  {id:22,left:78.77824729,right:78.87824729,top:10.78198544,bottom:10.68198544},
-  {id:23,left:78.87824729,right:78.97824729,top:10.78198544,bottom:10.68198544},
-  {id:24,left:78.97824729,right:79.07824729,top:10.78198544,bottom:10.68198544},
-  {id:25,left:79.07824729,right:79.17824729,top:10.78198544,bottom:10.68198544},
-  {id:26,left:79.17824729,right:79.27824729,top:10.78198544,bottom:10.68198544},
-  {id:27,left:79.27824729,right:79.37824729,top:10.78198544,bottom:10.68198544},
-  {id:28,left:78.87824729,right:78.97824729,top:10.68198544,bottom:10.58198544},
-  {id:29,left:78.97824729,right:79.07824729,top:10.68198544,bottom:10.58198544},
-  {id:30,left:79.07824729,right:79.17824729,top:10.68198544,bottom:10.58198544},
-  {id:31,left:79.17824729,right:79.27824729,top:10.68198544,bottom:10.58198544},
-  {id:32,left:79.27824729,right:79.37824729,top:10.68198544,bottom:10.58198544},
-  {id:33,left:79.37824729,right:79.47824729,top:10.68198544,bottom:10.58198544},
-  {id:34,left:79.07824729,right:79.17824729,top:10.58198544,bottom:10.48198544},
-  {id:35,left:79.17824729,right:79.27824729,top:10.58198544,bottom:10.48198544},
-  {id:36,left:79.27824729,right:79.37824729,top:10.58198544,bottom:10.48198544},
-  {id:37,left:79.37824729,right:79.47824729,top:10.58198544,bottom:10.48198544},
-  {id:38,left:79.47824729,right:79.57824729,top:10.58198544,bottom:10.48198544},
-  {id:39,left:79.07824729,right:79.17824729,top:10.48198544,bottom:10.38198544},
-  {id:40,left:79.17824729,right:79.27824729,top:10.48198544,bottom:10.38198544},
-  {id:41,left:79.27824729,right:79.37824729,top:10.48198544,bottom:10.38198544},
-  {id:42,left:79.37824729,right:79.47824729,top:10.48198544,bottom:10.38198544},
-  {id:43,left:79.47824729,right:79.57824729,top:10.48198544,bottom:10.38198544},
-  {id:44,left:79.07824729,right:79.17824729,top:10.38198544,bottom:10.28198544},
-  {id:45,left:79.17824729,right:79.27824729,top:10.38198544,bottom:10.28198544},
-  {id:46,left:79.27824729,right:79.37824729,top:10.38198544,bottom:10.28198544},
-  {id:47,left:79.37824729,right:79.47824729,top:10.38198544,bottom:10.28198544},
-  {id:48,left:79.47824729,right:79.57824729,top:10.38198544,bottom:10.28198544},
-  {id:49,left:79.07824729,right:79.17824729,top:10.28198544,bottom:10.18198544},
-  {id:50,left:79.17824729,right:79.27824729,top:10.28198544,bottom:10.18198544},
-  {id:51,left:79.27824729,right:79.37824729,top:10.28198544,bottom:10.18198544},
-  {id:52,left:79.07824729,right:79.17824729,top:10.18198544,bottom:10.08198544},
-  {id:53,left:79.17824729,right:79.27824729,top:10.18198544,bottom:10.08198544}
-];
-
-/* ---------------- LOGIC ---------------- */
-function insideZone(lat, lon, z) {
-  return lon >= z.left && lon <= z.right && lat <= z.top && lat >= z.bottom;
-}
-
-function distance(lat, lon, z) {
-  const clat = (z.top + z.bottom) / 2;
-  const clon = (z.left + z.right) / 2;
-  return Math.sqrt((lat - clat)**2 + (lon - clon)**2);
-}
-
-function startTracking() {
-  if (!navigator.geolocation) {
-    alert("Geolocation not supported");
-    return;
-  }
-
-  document.getElementById("status").innerText = "Status: Accessing location...";
-
-  watchId = navigator.geolocation.watchPosition(pos => {
-    const lat = pos.coords.latitude;
-    const lon = pos.coords.longitude;
-
-    document.getElementById("location").innerHTML =
-      `Latitude: ${lat.toFixed(6)}<br>Longitude: ${lon.toFixed(6)}`;
-
-    let found = null;
-
-    for (let z of zones) {
-      if (insideZone(lat, lon, z)) {
-        found = z;
-        break;
-      }
+    function getLocation() {
+      navigator.geolocation.getCurrentPosition(pos => {
+        const lat = pos.coords.latitude;
+        const lon = pos.coords.longitude;
+        document.getElementById("output").innerHTML =
+          `Latitude: ${lat}<br>Longitude: ${lon}<br><br>${findZone(lat, lon)}`;
+      });
     }
 
-    if (found) {
-      document.getElementById("zoneText").innerText =
-        `You are at Zone ${found.id}`;
-    } else {
-      let nearest = zones[0];
-      let min = distance(lat, lon, zones[0]);
-
-      for (let z of zones) {
-        let d = distance(lat, lon, z);
-        if (d < min) {
-          min = d;
-          nearest = z;
+    function findZone(lat, lon) {
+      for (const z of zones) {
+        if (lat >= z.bottom && lat <= z.top && lon >= z.left && lon <= z.right) {
+          return `<b>You are at Zone ${z.zone}</b>`;
         }
       }
 
-      document.getElementById("zoneText").innerText =
-        `You don’t belong to any zone. Nearest zone is Zone ${nearest.id}`;
+      let nearest = null;
+      let minDist = Infinity;
+
+      for (const z of zones) {
+        const dx = Math.max(z.left - lon, 0, lon - z.right);
+        const dy = Math.max(z.bottom - lat, 0, lat - z.top);
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
+        if (dist < minDist) {
+          minDist = dist;
+          nearest = z.zone;
+        }
+      }
+
+      return `You don’t belong to any zone.<br>Nearest zone is <b>Zone ${nearest}</b>`;
     }
-
-    document.getElementById("status").innerText = "Status: Tracking live";
-  });
-}
-
-function stopTracking() {
-  if (watchId !== null) {
-    navigator.geolocation.clearWatch(watchId);
-    watchId = null;
-    document.getElementById("status").innerText = "Status: Tracking stopped";
-  }
-}
-</script>
+  </script>
 
 </body>
 </html>
