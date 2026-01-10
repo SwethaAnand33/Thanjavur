@@ -152,7 +152,7 @@ const zones = [
 
 /* ---------------- LOGIC ---------------- */
 function insideZone(lat, lon, z) {
-  return lon >= z.left && lon <= z.right && lat <= z.top && lat >= z.bottom;
+  return lat > z.bottom && lat <= z.top && lon >= z.left && lon <= z.right;
 }
 
 function distance(lat, lon, z) {
