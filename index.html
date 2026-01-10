@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Thanjavur Zone Locator</title>
+<title>Thanjavur Land Zone Locator</title>
 
 <style>
 body {
@@ -17,28 +17,28 @@ body {
 }
 
 .card {
-  width: 380px;
+  width: 420px;
   background: #022c22;
-  padding: 25px;
-  border-radius: 14px;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+  padding: 26px;
+  border-radius: 16px;
+  box-shadow: 0 18px 45px rgba(0,0,0,0.6);
   text-align: center;
 }
 
 h2 {
-  margin-bottom: 10px;
+  margin-bottom: 6px;
 }
 
 .sub {
   font-size: 14px;
   color: #a7f3d0;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
 }
 
 button {
   background: #22c55e;
   border: none;
-  padding: 10px 20px;
+  padding: 10px 22px;
   margin: 6px;
   font-size: 16px;
   border-radius: 8px;
@@ -58,7 +58,7 @@ button:hover {
 }
 
 .zone {
-  margin-top: 15px;
+  margin-top: 16px;
   font-size: 18px;
   font-weight: 700;
   color: #facc15;
@@ -93,97 +93,126 @@ button:hover {
 <script>
 let watchId = null;
 
-/* -------- ZONE DATA (from XLSX) -------- */
+/* ---------------- ZONE DATA (53 ZONES) ---------------- */
 const zones = [
-  {id:1, left:79.378247, right:79.478247, top:11.181985, bottom:11.081985},
-  {id:2, left:79.478247, right:79.578247, top:11.181985, bottom:11.081985},
-  {id:3, left:79.178247, right:79.278247, top:11.081985, bottom:10.981985},
-  {id:4, left:79.278247, right:79.378247, top:11.081985, bottom:10.981985},
-  {id:5, left:79.378247, right:79.478247, top:11.081985, bottom:10.981985},
-  // ...
-  // Continue same pattern till Zone 53
+  {id:1,left:79.37824729,right:79.47824729,top:11.18198544,bottom:11.08198544},
+  {id:2,left:79.47824729,right:79.57824729,top:11.18198544,bottom:11.08198544},
+  {id:3,left:79.17824729,right:79.27824729,top:11.08198544,bottom:10.98198544},
+  {id:4,left:79.27824729,right:79.37824729,top:11.08198544,bottom:10.98198544},
+  {id:5,left:79.37824729,right:79.47824729,top:11.08198544,bottom:10.98198544},
+  {id:6,left:79.47824729,right:79.57824729,top:11.08198544,bottom:10.98198544},
+  {id:7,left:78.87824729,right:78.97824729,top:10.98198544,bottom:10.88198544},
+  {id:8,left:78.97824729,right:79.07824729,top:10.98198544,bottom:10.88198544},
+  {id:9,left:79.07824729,right:79.17824729,top:10.98198544,bottom:10.88198544},
+  {id:10,left:79.17824729,right:79.27824729,top:10.98198544,bottom:10.88198544},
+  {id:11,left:79.27824729,right:79.37824729,top:10.98198544,bottom:10.88198544},
+  {id:12,left:79.37824729,right:79.47824729,top:10.98198544,bottom:10.88198544},
+  {id:13,left:79.47824729,right:79.57824729,top:10.98198544,bottom:10.88198544},
+  {id:14,left:78.77824729,right:78.87824729,top:10.88198544,bottom:10.78198544},
+  {id:15,left:78.87824729,right:78.97824729,top:10.88198544,bottom:10.78198544},
+  {id:16,left:78.97824729,right:79.07824729,top:10.88198544,bottom:10.78198544},
+  {id:17,left:79.07824729,right:79.17824729,top:10.88198544,bottom:10.78198544},
+  {id:18,left:79.17824729,right:79.27824729,top:10.88198544,bottom:10.78198544},
+  {id:19,left:79.27824729,right:79.37824729,top:10.88198544,bottom:10.78198544},
+  {id:20,left:79.37824729,right:79.47824729,top:10.88198544,bottom:10.78198544},
+  {id:21,left:79.47824729,right:79.57824729,top:10.88198544,bottom:10.78198544},
+  {id:22,left:78.77824729,right:78.87824729,top:10.78198544,bottom:10.68198544},
+  {id:23,left:78.87824729,right:78.97824729,top:10.78198544,bottom:10.68198544},
+  {id:24,left:78.97824729,right:79.07824729,top:10.78198544,bottom:10.68198544},
+  {id:25,left:79.07824729,right:79.17824729,top:10.78198544,bottom:10.68198544},
+  {id:26,left:79.17824729,right:79.27824729,top:10.78198544,bottom:10.68198544},
+  {id:27,left:79.27824729,right:79.37824729,top:10.78198544,bottom:10.68198544},
+  {id:28,left:78.87824729,right:78.97824729,top:10.68198544,bottom:10.58198544},
+  {id:29,left:78.97824729,right:79.07824729,top:10.68198544,bottom:10.58198544},
+  {id:30,left:79.07824729,right:79.17824729,top:10.68198544,bottom:10.58198544},
+  {id:31,left:79.17824729,right:79.27824729,top:10.68198544,bottom:10.58198544},
+  {id:32,left:79.27824729,right:79.37824729,top:10.68198544,bottom:10.58198544},
+  {id:33,left:79.37824729,right:79.47824729,top:10.68198544,bottom:10.58198544},
+  {id:34,left:79.07824729,right:79.17824729,top:10.58198544,bottom:10.48198544},
+  {id:35,left:79.17824729,right:79.27824729,top:10.58198544,bottom:10.48198544},
+  {id:36,left:79.27824729,right:79.37824729,top:10.58198544,bottom:10.48198544},
+  {id:37,left:79.37824729,right:79.47824729,top:10.58198544,bottom:10.48198544},
+  {id:38,left:79.47824729,right:79.57824729,top:10.58198544,bottom:10.48198544},
+  {id:39,left:79.07824729,right:79.17824729,top:10.48198544,bottom:10.38198544},
+  {id:40,left:79.17824729,right:79.27824729,top:10.48198544,bottom:10.38198544},
+  {id:41,left:79.27824729,right:79.37824729,top:10.48198544,bottom:10.38198544},
+  {id:42,left:79.37824729,right:79.47824729,top:10.48198544,bottom:10.38198544},
+  {id:43,left:79.47824729,right:79.57824729,top:10.48198544,bottom:10.38198544},
+  {id:44,left:79.07824729,right:79.17824729,top:10.38198544,bottom:10.28198544},
+  {id:45,left:79.17824729,right:79.27824729,top:10.38198544,bottom:10.28198544},
+  {id:46,left:79.27824729,right:79.37824729,top:10.38198544,bottom:10.28198544},
+  {id:47,left:79.37824729,right:79.47824729,top:10.38198544,bottom:10.28198544},
+  {id:48,left:79.47824729,right:79.57824729,top:10.38198544,bottom:10.28198544},
+  {id:49,left:79.07824729,right:79.17824729,top:10.28198544,bottom:10.18198544},
+  {id:50,left:79.17824729,right:79.27824729,top:10.28198544,bottom:10.18198544},
+  {id:51,left:79.27824729,right:79.37824729,top:10.28198544,bottom:10.18198544},
+  {id:52,left:79.07824729,right:79.17824729,top:10.18198544,bottom:10.08198544},
+  {id:53,left:79.17824729,right:79.27824729,top:10.18198544,bottom:10.08198544}
 ];
 
-/* -------- CHECK IF POINT INSIDE ZONE -------- */
-function isInsideZone(lat, lon, z) {
-  return (
-    lon >= z.left &&
-    lon <= z.right &&
-    lat <= z.top &&
-    lat >= z.bottom
-  );
+/* ---------------- LOGIC ---------------- */
+function insideZone(lat, lon, z) {
+  return lon >= z.left && lon <= z.right && lat <= z.top && lat >= z.bottom;
 }
 
-/* -------- DISTANCE TO ZONE CENTER -------- */
 function distance(lat, lon, z) {
   const clat = (z.top + z.bottom) / 2;
   const clon = (z.left + z.right) / 2;
-  return Math.sqrt((lat - clat) ** 2 + (lon - clon) ** 2);
+  return Math.sqrt((lat - clat)**2 + (lon - clon)**2);
 }
 
-/* -------- MAIN TRACKING -------- */
 function startTracking() {
   if (!navigator.geolocation) {
     alert("Geolocation not supported");
     return;
   }
 
-  document.getElementById("status").innerText =
-    "Status: Accessing location...";
+  document.getElementById("status").innerText = "Status: Accessing location...";
 
-  watchId = navigator.geolocation.watchPosition(
-    pos => {
-      const lat = pos.coords.latitude;
-      const lon = pos.coords.longitude;
+  watchId = navigator.geolocation.watchPosition(pos => {
+    const lat = pos.coords.latitude;
+    const lon = pos.coords.longitude;
 
-      document.getElementById("location").innerHTML =
-        `Latitude: ${lat.toFixed(6)}<br>Longitude: ${lon.toFixed(6)}`;
+    document.getElementById("location").innerHTML =
+      `Latitude: ${lat.toFixed(6)}<br>Longitude: ${lon.toFixed(6)}`;
 
-      let foundZone = null;
+    let found = null;
+
+    for (let z of zones) {
+      if (insideZone(lat, lon, z)) {
+        found = z;
+        break;
+      }
+    }
+
+    if (found) {
+      document.getElementById("zoneText").innerText =
+        `You are at Zone ${found.id}`;
+    } else {
+      let nearest = zones[0];
+      let min = distance(lat, lon, zones[0]);
 
       for (let z of zones) {
-        if (isInsideZone(lat, lon, z)) {
-          foundZone = z;
-          break;
+        let d = distance(lat, lon, z);
+        if (d < min) {
+          min = d;
+          nearest = z;
         }
       }
 
-      if (foundZone) {
-        document.getElementById("zoneText").innerText =
-          `You are at Zone ${foundZone.id}`;
-      } else {
-        let nearest = zones[0];
-        let minDist = distance(lat, lon, zones[0]);
+      document.getElementById("zoneText").innerText =
+        `You don’t belong to any zone. Nearest zone is Zone ${nearest.id}`;
+    }
 
-        for (let z of zones) {
-          let d = distance(lat, lon, z);
-          if (d < minDist) {
-            minDist = d;
-            nearest = z;
-          }
-        }
-
-        document.getElementById("zoneText").innerText =
-          `You don’t belong to any zone. Nearest zone is Zone ${nearest.id}`;
-      }
-
-      document.getElementById("status").innerText =
-        "Status: Tracking live";
-    },
-    err => {
-      document.getElementById("status").innerText =
-        "Status: Permission denied";
-    },
-    { enableHighAccuracy: true }
-  );
+    document.getElementById("status").innerText = "Status: Tracking live";
+  });
 }
 
 function stopTracking() {
   if (watchId !== null) {
     navigator.geolocation.clearWatch(watchId);
     watchId = null;
-    document.getElementById("status").innerText =
-      "Status: Tracking stopped";
+    document.getElementById("status").innerText = "Status: Tracking stopped";
   }
 }
 </script>
