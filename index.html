@@ -62,31 +62,31 @@ body::before {
 /* Main Container */
 .container {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
-  max-width: 1200px;
+  max-width: 1300px;
   width: 100%;
-  gap: 30px;
+  gap: 40px;
   position: relative;
 }
 
-/* Farmer Image - LARGER SIZE (almost as tall as board) */
+/* GIANT Farmer Image - 3/4th of board height */
 .farmer-character {
   position: relative;
   z-index: 10;
-  width: 280px;
-  height: 400px;
+  width: 380px; /* GIANT SIZE */
+  height: 550px; /* GIANT SIZE */
   animation: farmerBounce 3s infinite ease-in-out;
-  filter: drop-shadow(5px 5px 15px rgba(0,0,0,0.4));
+  filter: drop-shadow(10px 10px 20px rgba(0,0,0,0.5));
   transform-style: preserve-3d;
   perspective: 1000px;
 }
 
 @keyframes farmerBounce {
-  0%, 100% { transform: translateY(0) rotateY(-5deg); }
-  25% { transform: translateY(-15px) rotateY(0deg); }
-  50% { transform: translateY(0) rotateY(5deg); }
-  75% { transform: translateY(-10px) rotateY(-2deg); }
+  0%, 100% { transform: translateY(0) rotateY(-8deg); }
+  25% { transform: translateY(-20px) rotateY(0deg); }
+  50% { transform: translateY(0) rotateY(8deg); }
+  75% { transform: translateY(-15px) rotateY(-4deg); }
 }
 
 .farmer-image {
@@ -97,29 +97,29 @@ body::before {
     url('farmer.png') no-repeat center bottom;
   background-size: contain;
   position: relative;
-  transform: rotateY(-5deg);
+  transform: rotateY(-8deg);
 }
 
 /* 3D effect for farmer */
 .farmer-shadow {
   position: absolute;
-  bottom: -25px;
+  bottom: -35px;
   left: 50%;
   transform: translateX(-50%) rotateX(60deg);
-  width: 180px;
-  height: 40px;
-  background: rgba(0, 0, 0, 0.4);
+  width: 280px; /* Larger shadow for giant farmer */
+  height: 60px; /* Larger shadow for giant farmer */
+  background: rgba(0, 0, 0, 0.5);
   border-radius: 50%;
-  filter: blur(8px);
+  filter: blur(15px);
   animation: shadowPulse 3s infinite ease-in-out;
 }
 
 @keyframes shadowPulse {
-  0%, 100% { width: 180px; opacity: 0.4; }
-  50% { width: 200px; opacity: 0.6; }
+  0%, 100% { width: 280px; opacity: 0.5; }
+  50% { width: 320px; opacity: 0.7; }
 }
 
-/* Main Card with Wooden Board Effect */
+/* Main Card with Wooden Board Effect - COMPACT DESIGN */
 .wooden-board {
   background: 
     /* Wood texture */
@@ -127,7 +127,7 @@ body::before {
     /* Wood color gradient */
     linear-gradient(135deg, #8B4513, #A0522D, #8B4513);
   background-size: auto, cover;
-  padding: 30px;
+  padding: 25px; /* Reduced padding */
   border-radius: 20px;
   box-shadow: 
     0 20px 40px rgba(0, 0, 0, 0.5),
@@ -135,15 +135,28 @@ body::before {
     inset 0 -1px 0 rgba(0, 0, 0, 0.2);
   border: 12px solid #5D4037;
   position: relative;
-  max-width: 500px;
+  max-width: 520px;
   width: 100%;
   text-align: center;
   animation: boardAppear 1s ease-out;
   z-index: 5;
-  min-height: 420px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  max-height: 580px; /* Fixed max height */
+  overflow-y: auto; /* Scroll only if absolutely needed */
+  overflow-x: hidden;
+}
+
+.wooden-board::-webkit-scrollbar {
+  width: 8px;
+}
+
+.wooden-board::-webkit-scrollbar-track {
+  background: rgba(139, 69, 19, 0.3);
+  border-radius: 4px;
+}
+
+.wooden-board::-webkit-scrollbar-thumb {
+  background: #8B4513;
+  border-radius: 4px;
 }
 
 @keyframes boardAppear {
@@ -180,41 +193,41 @@ body::before {
 
 /* Header Styles */
 .header {
-  margin-bottom: 20px;
-  padding-bottom: 15px;
+  margin-bottom: 15px; /* Reduced margin */
+  padding-bottom: 12px; /* Reduced padding */
   border-bottom: 3px dashed #D7CCC8;
   position: relative;
 }
 
 .header h2 {
-  font-size: 2.2rem;
+  font-size: 2rem; /* Slightly smaller */
   color: #FFD700;
   text-shadow: 3px 3px 0 #5D4037, 5px 5px 0 rgba(0,0,0,0.2);
-  margin-bottom: 8px;
+  margin-bottom: 6px; /* Reduced margin */
   letter-spacing: 1px;
 }
 
 .header .sub {
-  font-size: 1.1rem;
+  font-size: 1rem; /* Slightly smaller */
   color: #FFECB3;
   font-style: italic;
   text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
 }
 
-/* Button Styles */
+/* Button Styles - COMPACT */
 .controls {
   display: flex;
   justify-content: center;
-  gap: 15px;
-  margin: 20px 0;
+  gap: 12px; /* Reduced gap */
+  margin: 15px 0; /* Reduced margin */
   flex-wrap: wrap;
 }
 
 .button {
   background: linear-gradient(to bottom, #388E3C, #1B5E20);
   border: none;
-  padding: 14px 28px;
-  font-size: 1.1rem;
+  padding: 12px 22px; /* Reduced padding */
+  font-size: 1rem; /* Slightly smaller */
   border-radius: 50px;
   cursor: pointer;
   color: white;
@@ -224,8 +237,8 @@ body::before {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  min-width: 160px;
+  gap: 8px; /* Reduced gap */
+  min-width: 150px; /* Slightly smaller */
   position: relative;
   overflow: hidden;
 }
@@ -256,7 +269,7 @@ body::before {
 }
 
 .button i {
-  font-size: 1.3rem;
+  font-size: 1.2rem; /* Slightly smaller */
 }
 
 #stopBtn {
@@ -272,16 +285,15 @@ body::before {
   box-shadow: 0 4px 0 #B71C1C, 0 5px 10px rgba(0,0,0,0.3);
 }
 
-/* Info Display */
+/* Info Display - COMPACT */
 .info-display {
   background: rgba(255, 255, 255, 0.95);
   border-radius: 15px;
-  padding: 20px;
-  margin-top: 20px;
+  padding: 15px; /* Reduced padding */
+  margin-top: 15px; /* Reduced margin */
   box-shadow: inset 0 0 15px rgba(0,0,0,0.1);
   border: 5px solid #8D6E63;
   animation: fadeIn 1s ease-out;
-  flex-grow: 1;
 }
 
 @keyframes fadeIn {
@@ -290,9 +302,9 @@ body::before {
 }
 
 .location-info {
-  font-size: 1.1rem;
-  line-height: 1.6;
-  margin-bottom: 15px;
+  font-size: 1rem; /* Slightly smaller */
+  line-height: 1.5; /* Tighter line height */
+  margin-bottom: 12px; /* Reduced margin */
   color: #4E342E;
   text-align: left;
   padding: 10px;
@@ -303,13 +315,13 @@ body::before {
 
 /* Updated Zone Display with smaller font size */
 .zone-display {
-  font-size: 1.4rem; /* Reduced from 1.8rem */
+  font-size: 1.3rem; /* Slightly smaller */
   font-weight: 800;
   color: #D32F2F;
   background: #FFECB3;
-  padding: 12px;
+  padding: 10px; /* Reduced padding */
   border-radius: 10px;
-  margin: 10px 0;
+  margin: 8px 0; /* Reduced margin */
   border: 3px dashed #FFA000;
   text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
   animation: pulse 2s infinite;
@@ -321,24 +333,24 @@ body::before {
 }
 
 .status-display {
-  font-size: 1rem;
+  font-size: 0.9rem; /* Slightly smaller */
   color: #5D4037;
   background: #C8E6C9;
-  padding: 12px;
+  padding: 10px; /* Reduced padding */
   border-radius: 10px;
   font-weight: 600;
   border: 2px solid #388E3C;
-  margin-top: 10px;
+  margin-top: 8px; /* Reduced margin */
 }
 
-/* Crops Recommendation Section - FOR ZONE 18 */
+/* Crops Recommendation Section - COMPACT DESIGN */
 .crops-recommendation {
   background: rgba(255, 248, 225, 0.95);
-  border-radius: 15px;
-  padding: 20px;
-  margin-top: 15px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-  border: 8px solid #8D6E63;
+  border-radius: 12px; /* Smaller radius */
+  padding: 15px; /* Reduced padding */
+  margin-top: 12px; /* Reduced margin */
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  border: 6px solid #8D6E63; /* Thinner border */
   animation: slideUp 1s ease-out;
   display: none; /* Hidden by default, shown when zone 18 is detected */
 }
@@ -350,12 +362,12 @@ body::before {
 
 .crops-recommendation h3 {
   color: #5D4037;
-  font-size: 1.5rem;
-  margin-bottom: 15px;
+  font-size: 1.3rem; /* Smaller font */
+  margin-bottom: 12px; /* Reduced margin */
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 8px; /* Reduced gap */
 }
 
 .crops-recommendation h3 i {
@@ -364,52 +376,53 @@ body::before {
 
 .crops-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 15px;
-  margin-top: 15px;
+  grid-template-columns: repeat(2, 1fr); /* Always 2 columns */
+  gap: 10px; /* Reduced gap */
+  margin-top: 12px; /* Reduced margin */
 }
 
 .crop-item {
   background: white;
-  border-radius: 10px;
-  padding: 15px 10px;
+  border-radius: 8px; /* Smaller radius */
+  padding: 10px 8px; /* Reduced padding */
   text-align: center;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
   transition: all 0.3s;
   border: 2px solid #C8E6C9;
 }
 
 .crop-item:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+  transform: translateY(-3px); /* Smaller hover effect */
+  box-shadow: 0 8px 15px rgba(0,0,0,0.15);
   border-color: #388E3C;
 }
 
 .crop-icon {
-  font-size: 2rem;
-  margin-bottom: 10px;
+  font-size: 1.6rem; /* Smaller icons */
+  margin-bottom: 8px; /* Reduced margin */
   color: #388E3C;
 }
 
 .crop-name {
   font-weight: 700;
   color: #5D4033;
+  font-size: 0.9rem; /* Smaller font */
 }
 
 /* Responsive Design */
 @media (max-width: 1024px) {
   .container {
-    flex-direction: row;
-    align-items: flex-end;
+    gap: 30px;
   }
   
   .farmer-character {
-    width: 240px;
-    height: 340px;
+    width: 320px; /* Slightly smaller on tablets */
+    height: 480px;
   }
   
   .wooden-board {
     max-width: 480px;
+    max-height: 540px;
   }
 }
 
@@ -417,58 +430,55 @@ body::before {
   .container {
     flex-direction: column;
     align-items: center;
-    gap: 20px;
-  }
-  
-  .farmer-character {
-    width: 220px;
-    height: 320px;
-    margin-bottom: -40px;
-  }
-  
-  .wooden-board {
-    padding: 25px;
-    max-width: 450px;
-    min-height: auto;
-  }
-  
-  .header h2 {
-    font-size: 1.8rem;
-  }
-  
-  .button {
-    padding: 12px 20px;
-    font-size: 1rem;
-    min-width: 140px;
-  }
-  
-  .crops-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  
-  .zone-display {
-    font-size: 1.2rem; /* Smaller on mobile */
-  }
-}
-
-@media (max-width: 480px) {
-  .container {
     gap: 15px;
   }
   
   .farmer-character {
-    width: 180px;
-    height: 260px;
+    width: 280px; /* Still large on mobile */
+    height: 420px;
     margin-bottom: -30px;
   }
   
   .wooden-board {
     padding: 20px;
-    max-width: 100%;
+    max-width: 450px;
+    max-height: 500px;
   }
   
   .header h2 {
-    font-size: 1.5rem;
+    font-size: 1.7rem;
+  }
+  
+  .button {
+    padding: 10px 18px;
+    font-size: 0.95rem;
+    min-width: 140px;
+  }
+  
+  .zone-display {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    gap: 10px;
+  }
+  
+  .farmer-character {
+    width: 220px;
+    height: 330px;
+    margin-bottom: -20px;
+  }
+  
+  .wooden-board {
+    padding: 15px;
+    max-width: 100%;
+    max-height: 480px;
+  }
+  
+  .header h2 {
+    font-size: 1.4rem;
   }
   
   .controls {
@@ -478,15 +488,15 @@ body::before {
   
   .button {
     width: 100%;
-    max-width: 280px;
+    max-width: 260px;
   }
   
   .crops-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr; /* Single column on very small screens */
   }
   
   .zone-display {
-    font-size: 1.1rem; /* Even smaller on very small screens */
+    font-size: 1rem;
   }
 }
 
@@ -518,13 +528,13 @@ body::before {
   <div class="floating-particle" style="top: 80%; right: 20%; animation-delay: 3s;"></div>
   
   <div class="container">
-    <!-- Farmer Character with Image - Now larger -->
+    <!-- GIANT Farmer Character with Image -->
     <div class="farmer-character">
       <div class="farmer-image"></div>
       <div class="farmer-shadow"></div>
     </div>
 
-    <!-- Main Wooden Board -->
+    <!-- Main Wooden Board - COMPACT -->
     <div class="wooden-board">
       <div class="header">
         <h2><i class="fas fa-tractor"></i> Thanjavur Land Zone Locator</h2>
