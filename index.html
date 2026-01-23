@@ -62,33 +62,31 @@ body::before {
 /* Main Container */
 .container {
   display: flex;
-  flex-direction: column;
   align-items: center;
+  justify-content: center;
   max-width: 1200px;
   width: 100%;
   gap: 30px;
   position: relative;
 }
 
-/* Farmer Image - Replace with your farmer image */
+/* Farmer Image - LARGER SIZE (almost as tall as board) */
 .farmer-character {
-  position: absolute;
+  position: relative;
   z-index: 10;
-  bottom: 0;
-  left: 8%;
-  width: 200px;
-  height: 300px;
+  width: 280px;
+  height: 400px;
   animation: farmerBounce 3s infinite ease-in-out;
-  filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.3));
+  filter: drop-shadow(5px 5px 15px rgba(0,0,0,0.4));
   transform-style: preserve-3d;
   perspective: 1000px;
 }
 
 @keyframes farmerBounce {
-  0%, 100% { transform: translateY(0) rotateY(0deg); }
-  25% { transform: translateY(-10px) rotateY(5deg); }
-  50% { transform: translateY(0) rotateY(0deg); }
-  75% { transform: translateY(-5px) rotateY(-5deg); }
+  0%, 100% { transform: translateY(0) rotateY(-5deg); }
+  25% { transform: translateY(-15px) rotateY(0deg); }
+  50% { transform: translateY(0) rotateY(5deg); }
+  75% { transform: translateY(-10px) rotateY(-2deg); }
 }
 
 .farmer-image {
@@ -99,26 +97,26 @@ body::before {
     url('farmer.png') no-repeat center bottom;
   background-size: contain;
   position: relative;
-  transform: rotateY(-10deg);
+  transform: rotateY(-5deg);
 }
 
 /* 3D effect for farmer */
 .farmer-shadow {
   position: absolute;
-  bottom: -20px;
+  bottom: -25px;
   left: 50%;
   transform: translateX(-50%) rotateX(60deg);
-  width: 120px;
-  height: 30px;
-  background: rgba(0, 0, 0, 0.3);
+  width: 180px;
+  height: 40px;
+  background: rgba(0, 0, 0, 0.4);
   border-radius: 50%;
-  filter: blur(5px);
+  filter: blur(8px);
   animation: shadowPulse 3s infinite ease-in-out;
 }
 
 @keyframes shadowPulse {
-  0%, 100% { width: 120px; opacity: 0.3; }
-  50% { width: 140px; opacity: 0.5; }
+  0%, 100% { width: 180px; opacity: 0.4; }
+  50% { width: 200px; opacity: 0.6; }
 }
 
 /* Main Card with Wooden Board Effect */
@@ -142,6 +140,10 @@ body::before {
   text-align: center;
   animation: boardAppear 1s ease-out;
   z-index: 5;
+  min-height: 420px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 @keyframes boardAppear {
@@ -204,7 +206,7 @@ body::before {
   display: flex;
   justify-content: center;
   gap: 15px;
-  margin: 25px 0;
+  margin: 20px 0;
   flex-wrap: wrap;
 }
 
@@ -279,6 +281,7 @@ body::before {
   box-shadow: inset 0 0 15px rgba(0,0,0,0.1);
   border: 5px solid #8D6E63;
   animation: fadeIn 1s ease-out;
+  flex-grow: 1;
 }
 
 @keyframes fadeIn {
@@ -325,9 +328,10 @@ body::before {
   border-radius: 10px;
   font-weight: 600;
   border: 2px solid #388E3C;
+  margin-top: 10px;
 }
 
-/* Crops Recommendation Section - ALWAYS VISIBLE WHEN ZONE 8 */
+/* Crops Recommendation Section - FOR ZONE 18 */
 .crops-recommendation {
   background: rgba(255, 248, 225, 0.95);
   border-radius: 15px;
@@ -336,7 +340,7 @@ body::before {
   box-shadow: 0 10px 25px rgba(0,0,0,0.2);
   border: 8px solid #8D6E63;
   animation: slideUp 1s ease-out;
-  display: none; /* Hidden by default, shown when zone 8 is detected */
+  display: none; /* Hidden by default, shown when zone 18 is detected */
 }
 
 @keyframes slideUp {
@@ -389,27 +393,43 @@ body::before {
 
 .crop-name {
   font-weight: 700;
-  color: #5D4037;
+  color: #5D4033;
 }
 
 /* Responsive Design */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .container {
-    flex-direction: column;
+    flex-direction: row;
+    align-items: flex-end;
   }
   
   .farmer-character {
-    position: relative;
-    left: 0;
-    margin-bottom: -50px;
-    order: 2;
-    width: 150px;
-    height: 225px;
+    width: 240px;
+    height: 340px;
   }
   
   .wooden-board {
-    padding: 20px;
-    order: 1;
+    max-width: 480px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .farmer-character {
+    width: 220px;
+    height: 320px;
+    margin-bottom: -40px;
+  }
+  
+  .wooden-board {
+    padding: 25px;
+    max-width: 450px;
+    min-height: auto;
   }
   
   .header h2 {
@@ -432,6 +452,21 @@ body::before {
 }
 
 @media (max-width: 480px) {
+  .container {
+    gap: 15px;
+  }
+  
+  .farmer-character {
+    width: 180px;
+    height: 260px;
+    margin-bottom: -30px;
+  }
+  
+  .wooden-board {
+    padding: 20px;
+    max-width: 100%;
+  }
+  
   .header h2 {
     font-size: 1.5rem;
   }
@@ -466,8 +501,8 @@ body::before {
   animation: highlight 1s 3;
 }
 
-/* Add highlight for Zone 8 specifically */
-.zone-8-highlight {
+/* Add highlight for Zone 18 specifically */
+.zone-18-highlight {
   animation: highlight 2s infinite;
   border: 3px solid #388E3C;
   box-shadow: 0 0 15px rgba(56, 142, 60, 0.5);
@@ -483,7 +518,7 @@ body::before {
   <div class="floating-particle" style="top: 80%; right: 20%; animation-delay: 3s;"></div>
   
   <div class="container">
-    <!-- Farmer Character with Image -->
+    <!-- Farmer Character with Image - Now larger -->
     <div class="farmer-character">
       <div class="farmer-image"></div>
       <div class="farmer-shadow"></div>
@@ -516,9 +551,9 @@ body::before {
           <i class="fas fa-map"></i> Zone: --
         </div>
 
-        <!-- Crop Recommendations Section (Will be shown for Zone 8) -->
+        <!-- Crop Recommendations Section (Will be shown for Zone 18) -->
         <div class="crops-recommendation" id="cropsRecommendation">
-          <h3><i class="fas fa-seedling"></i> Recommended Crops for Zone 8</h3>
+          <h3><i class="fas fa-seedling"></i> Recommended Crops for Zone 18</h3>
           <div class="crops-grid" id="cropsGrid">
             <!-- Crops will be dynamically inserted here -->
           </div>
@@ -589,19 +624,19 @@ body::before {
       {id:53,left:79.17824729,right:79.27824729,top:10.18198544,bottom:10.08198544}
     ];
 
-    // Crop data for Zone 8
-    const zone8Crops = [
-      { name: "Black Gram", icon: "fas fa-seedling" },
+    // CORRECTED: Crop data for Zone 18 (not Zone 8)
+    const zone18Crops = [
       { name: "Finger Millet", icon: "fas fa-wheat-awn" },
       { name: "Little Millet", icon: "fas fa-wheat-alt" },
-      { name: "Pigeon Pea", icon: "fas fa-leaf" }
+      { name: "Maize", icon: "fas fa-corn" },
+      { name: "Sorghum", icon: "fas fa-seedling" }
     ];
 
     let watchId = null;
 
     // Function to check if coordinates are inside a zone
     function insideZone(lat, lon, z) {
-      return lat > z.bottom && lat <= z.top && lon >= z.left && lon <= z.right;
+      return lat >= z.bottom && lat <= z.top && lon >= z.left && lon <= z.right;
     }
 
     // Function to calculate distance between coordinates and zone center
@@ -611,16 +646,19 @@ body::before {
       return Math.sqrt((lat - clat)**2 + (lon - clon)**2);
     }
 
-    // Function to show crop recommendations for Zone 8
+    // Function to show crop recommendations for Zone 18 (NOT Zone 8)
     function showCropRecommendations() {
       const cropsRec = document.getElementById("cropsRecommendation");
       const cropsGrid = document.getElementById("cropsGrid");
       
+      // Update heading to show Zone 18
+      cropsRec.querySelector('h3').innerHTML = '<i class="fas fa-seedling"></i> Recommended Crops for Zone 18';
+      
       // Clear any existing crops
       cropsGrid.innerHTML = "";
       
-      // Add crops for Zone 8
-      zone8Crops.forEach(crop => {
+      // Add crops for Zone 18
+      zone18Crops.forEach(crop => {
         const cropElement = document.createElement("div");
         cropElement.className = "crop-item";
         cropElement.innerHTML = `
@@ -634,9 +672,9 @@ body::before {
       cropsRec.style.display = "block";
       cropsRec.style.animation = "slideUp 1s ease-out";
       
-      // Add special highlight class for Zone 8
+      // Add special highlight class for Zone 18
       const zoneDisplay = document.getElementById("zoneText");
-      zoneDisplay.classList.add("zone-8-highlight");
+      zoneDisplay.classList.add("zone-18-highlight");
     }
 
     // Function to hide crop recommendations
@@ -644,12 +682,12 @@ body::before {
       const cropsRec = document.getElementById("cropsRecommendation");
       cropsRec.style.display = "none";
       
-      // Remove Zone 8 highlight
+      // Remove Zone 18 highlight
       const zoneDisplay = document.getElementById("zoneText");
-      zoneDisplay.classList.remove("zone-8-highlight");
+      zoneDisplay.classList.remove("zone-18-highlight");
     }
 
-    // Main tracking function - FIXED VERSION
+    // Main tracking function
     function startTracking() {
       if (!navigator.geolocation) {
         alert("Geolocation is not supported by your browser.");
@@ -671,7 +709,7 @@ body::before {
 
           let foundZone = null;
 
-          // Check if inside any zone - FIXED LOGIC
+          // Check if inside any zone
           for (let zone of zones) {
             if (insideZone(lat, lon, zone)) {
               foundZone = zone;
@@ -684,7 +722,7 @@ body::before {
             zoneDisplay.innerHTML = `<i class="fas fa-map"></i> You are at Zone ${foundZone.id}`;
             zoneDisplay.classList.add("highlight-zone");
             
-            // If zone is 8, show crop recommendations - FIXED: USING === NOT ==
+            // CORRECTED: Check for Zone 18 (not Zone 8)
             if (foundZone.id === 18) {
               showCropRecommendations();
             } else {
@@ -711,7 +749,7 @@ body::before {
             document.getElementById("zoneText").innerHTML = 
               `<i class="fas fa-map"></i> You are not in any zone. Nearest is Zone ${nearestZone.id}`;
               
-            // Hide crop recommendations if not in zone 8
+            // Hide crop recommendations if not in zone 18
             hideCropRecommendations();
           }
 
@@ -744,13 +782,6 @@ body::before {
       // Add some initial animation to the board
       const board = document.querySelector('.wooden-board');
       board.style.animation = 'boardAppear 1s ease-out';
-      
-      // Test function to simulate Zone 8 detection (for testing)
-      // Uncomment to test Zone 8 display
-      // setTimeout(() => {
-      //   document.getElementById("zoneText").innerHTML = '<i class="fas fa-map"></i> You are at Zone 8';
-      //   showCropRecommendations();
-      // }, 1000);
     });
   </script>
 </body>
