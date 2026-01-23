@@ -20,9 +20,7 @@ body {
   justify-content: center;
   align-items: center;
   background: 
-    /* Fallback color */
-    linear-gradient(rgba(20, 83, 45, 0.85), rgba(5, 46, 22, 0.9)),
-    /* REPLACE THIS URL WITH YOUR BACKGROUND IMAGE PATH */
+    /* Your background image without green overlay */
     url('background.jpg');
   background-size: cover;
   background-position: center;
@@ -33,9 +31,7 @@ body {
   overflow-x: hidden;
 }
 
-/* Rest of your CSS remains the same... */
-
-/* Animated background elements */
+/* Animated background elements - lighter overlay for better text visibility */
 body::before {
   content: '';
   position: absolute;
@@ -43,18 +39,24 @@ body::before {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: 
-    radial-gradient(rgba(255, 255, 255, 0.1) 2px, transparent 3px),
-    radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 2px);
-  background-size: 50px 50px, 30px 30px;
-  background-position: 0 0, 20px 20px;
+  background: rgba(255, 255, 255, 0.1);
   z-index: -1;
-  animation: float 20s linear infinite;
 }
 
+/* Floating particles animation */
 @keyframes float {
-  0% { background-position: 0 0, 20px 20px; }
-  100% { background-position: 50px 50px, 70px 70px; }
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(180deg); }
+}
+
+.floating-particle {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%234CAF50"><path d="M12,2C8.1,2,5,5.1,5,9c0,5.2,7,13,7,13s7-7.8,7-13C19,5.1,15.9,2,12,2z M12,11.5c-1.4,0-2.5-1.1-2.5-2.5 s1.1-2.5,2.5-2.5s2.5,1.1,2.5,2.5S13.4,11.5,12,11.5z"/></svg>');
+  background-size: contain;
+  animation: float 6s infinite ease-in-out;
+  z-index: -1;
 }
 
 /* Main Container */
@@ -68,85 +70,55 @@ body::before {
   position: relative;
 }
 
-/* Cartoon Character */
-.cartoon-character {
+/* Farmer Image - Replace with your farmer image */
+.farmer-character {
   position: absolute;
   z-index: 10;
   bottom: 0;
-  left: 10%;
-  width: 180px;
-  height: 250px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  animation: bounce 3s infinite ease-in-out;
+  left: 8%;
+  width: 200px;
+  height: 300px;
+  animation: farmerBounce 3s infinite ease-in-out;
+  filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.3));
+  transform-style: preserve-3d;
+  perspective: 1000px;
 }
 
-@keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-15px); }
+@keyframes farmerBounce {
+  0%, 100% { transform: translateY(0) rotateY(0deg); }
+  25% { transform: translateY(-10px) rotateY(5deg); }
+  50% { transform: translateY(0) rotateY(0deg); }
+  75% { transform: translateY(-5px) rotateY(-5deg); }
 }
 
-.character-body {
-  width: 120px;
-  height: 150px;
-  background: #4a7c59;
-  border-radius: 50% 50% 40% 40%;
+.farmer-image {
+  width: 100%;
+  height: 100%;
+  background: 
+    /* Replace with your farmer image */
+    url('farmer.png') no-repeat center bottom;
+  background-size: contain;
   position: relative;
-  box-shadow: inset 0 -10px 0 rgba(0,0,0,0.1);
+  transform: rotateY(-10deg);
 }
 
-.character-head {
-  width: 80px;
-  height: 80px;
-  background: #ffcc8e;
+/* 3D effect for farmer */
+.farmer-shadow {
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%) rotateX(60deg);
+  width: 120px;
+  height: 30px;
+  background: rgba(0, 0, 0, 0.3);
   border-radius: 50%;
-  position: absolute;
-  top: -40px;
-  left: 50%;
-  transform: translateX(-50%);
-  box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+  filter: blur(5px);
+  animation: shadowPulse 3s infinite ease-in-out;
 }
 
-.character-hat {
-  width: 90px;
-  height: 40px;
-  background: #d32f2f;
-  border-radius: 50% 50% 0 0;
-  position: absolute;
-  top: -55px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.character-hat::after {
-  content: '';
-  position: absolute;
-  width: 20px;
-  height: 50px;
-  background: #d32f2f;
-  top: -25px;
-  left: 50%;
-  transform: translateX(-50%);
-  border-radius: 10px;
-}
-
-.character-arm {
-  position: absolute;
-  width: 80px;
-  height: 20px;
-  background: #ffcc8e;
-  top: 60px;
-  right: -70px;
-  border-radius: 10px;
-  transform: rotate(-30deg);
-  transform-origin: left center;
-  animation: wave 4s infinite ease-in-out;
-}
-
-@keyframes wave {
-  0%, 100% { transform: rotate(-30deg); }
-  50% { transform: rotate(-20deg); }
+@keyframes shadowPulse {
+  0%, 100% { width: 120px; opacity: 0.3; }
+  50% { width: 140px; opacity: 0.5; }
 }
 
 /* Main Card with Wooden Board Effect */
@@ -300,7 +272,7 @@ body::before {
 
 /* Info Display */
 .info-display {
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.95);
   border-radius: 15px;
   padding: 20px;
   margin-top: 20px;
@@ -326,14 +298,15 @@ body::before {
   border-left: 5px solid #388E3C;
 }
 
+/* Updated Zone Display with smaller font size */
 .zone-display {
-  font-size: 1.8rem;
+  font-size: 1.4rem; /* Reduced from 1.8rem */
   font-weight: 800;
   color: #D32F2F;
   background: #FFECB3;
-  padding: 15px;
+  padding: 12px;
   border-radius: 10px;
-  margin: 15px 0;
+  margin: 10px 0;
   border: 3px dashed #FFA000;
   text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
   animation: pulse 2s infinite;
@@ -354,12 +327,12 @@ body::before {
   border: 2px solid #388E3C;
 }
 
-/* Crops Recommendation Section */
+/* Crops Recommendation Section - ALWAYS VISIBLE WHEN ZONE 8 */
 .crops-recommendation {
   background: rgba(255, 248, 225, 0.95);
   border-radius: 15px;
   padding: 20px;
-  margin-top: 25px;
+  margin-top: 15px;
   box-shadow: 0 10px 25px rgba(0,0,0,0.2);
   border: 8px solid #8D6E63;
   animation: slideUp 1s ease-out;
@@ -425,23 +398,13 @@ body::before {
     flex-direction: column;
   }
   
-  .cartoon-character {
+  .farmer-character {
     position: relative;
     left: 0;
     margin-bottom: -50px;
     order: 2;
-    width: 140px;
-    height: 200px;
-  }
-  
-  .character-body {
-    width: 100px;
-    height: 120px;
-  }
-  
-  .character-arm {
-    width: 60px;
-    right: -50px;
+    width: 150px;
+    height: 225px;
   }
   
   .wooden-board {
@@ -461,6 +424,10 @@ body::before {
   
   .crops-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .zone-display {
+    font-size: 1.2rem; /* Smaller on mobile */
   }
 }
 
@@ -484,7 +451,7 @@ body::before {
   }
   
   .zone-display {
-    font-size: 1.5rem;
+    font-size: 1.1rem; /* Even smaller on very small screens */
   }
 }
 
@@ -498,17 +465,28 @@ body::before {
 .highlight-zone {
   animation: highlight 1s 3;
 }
+
+/* Add highlight for Zone 8 specifically */
+.zone-8-highlight {
+  animation: highlight 2s infinite;
+  border: 3px solid #388E3C;
+  box-shadow: 0 0 15px rgba(56, 142, 60, 0.5);
+}
 </style>
 </head>
 
 <body>
+  <!-- Floating particles -->
+  <div class="floating-particle" style="top: 10%; left: 5%; animation-delay: 0s;"></div>
+  <div class="floating-particle" style="top: 20%; right: 10%; animation-delay: 1s; width: 30px; height: 30px;"></div>
+  <div class="floating-particle" style="top: 60%; left: 15%; animation-delay: 2s; width: 25px; height: 25px;"></div>
+  <div class="floating-particle" style="top: 80%; right: 20%; animation-delay: 3s;"></div>
+  
   <div class="container">
-    <!-- Cartoon Character -->
-    <div class="cartoon-character">
-      <div class="character-hat"></div>
-      <div class="character-head"></div>
-      <div class="character-body"></div>
-      <div class="character-arm"></div>
+    <!-- Farmer Character with Image -->
+    <div class="farmer-character">
+      <div class="farmer-image"></div>
+      <div class="farmer-shadow"></div>
     </div>
 
     <!-- Main Wooden Board -->
@@ -538,16 +516,16 @@ body::before {
           <i class="fas fa-map"></i> Zone: --
         </div>
 
+        <!-- Crop Recommendations Section (Will be shown for Zone 8) -->
+        <div class="crops-recommendation" id="cropsRecommendation">
+          <h3><i class="fas fa-seedling"></i> Recommended Crops for Zone 8</h3>
+          <div class="crops-grid" id="cropsGrid">
+            <!-- Crops will be dynamically inserted here -->
+          </div>
+        </div>
+
         <div class="status-display" id="status">
           <i class="fas fa-info-circle"></i> Status: Idle
-        </div>
-      </div>
-
-      <!-- Crop Recommendations (Hidden by default, shown for Zone 8) -->
-      <div class="crops-recommendation" id="cropsRecommendation">
-        <h3><i class="fas fa-seedling"></i> Recommended Crops for Your Zone</h3>
-        <div class="crops-grid" id="cropsGrid">
-          <!-- Crops will be dynamically inserted here -->
         </div>
       </div>
     </div>
@@ -655,15 +633,23 @@ body::before {
       // Show the recommendations section with animation
       cropsRec.style.display = "block";
       cropsRec.style.animation = "slideUp 1s ease-out";
+      
+      // Add special highlight class for Zone 8
+      const zoneDisplay = document.getElementById("zoneText");
+      zoneDisplay.classList.add("zone-8-highlight");
     }
 
     // Function to hide crop recommendations
     function hideCropRecommendations() {
       const cropsRec = document.getElementById("cropsRecommendation");
       cropsRec.style.display = "none";
+      
+      // Remove Zone 8 highlight
+      const zoneDisplay = document.getElementById("zoneText");
+      zoneDisplay.classList.remove("zone-8-highlight");
     }
 
-    // Main tracking function
+    // Main tracking function - FIXED VERSION
     function startTracking() {
       if (!navigator.geolocation) {
         alert("Geolocation is not supported by your browser.");
@@ -685,7 +671,7 @@ body::before {
 
           let foundZone = null;
 
-          // Check if inside any zone
+          // Check if inside any zone - FIXED LOGIC
           for (let zone of zones) {
             if (insideZone(lat, lon, zone)) {
               foundZone = zone;
@@ -698,7 +684,7 @@ body::before {
             zoneDisplay.innerHTML = `<i class="fas fa-map"></i> You are at Zone ${foundZone.id}`;
             zoneDisplay.classList.add("highlight-zone");
             
-            // If zone is 8, show crop recommendations
+            // If zone is 8, show crop recommendations - FIXED: USING === NOT ==
             if (foundZone.id === 8) {
               showCropRecommendations();
             } else {
@@ -758,6 +744,13 @@ body::before {
       // Add some initial animation to the board
       const board = document.querySelector('.wooden-board');
       board.style.animation = 'boardAppear 1s ease-out';
+      
+      // Test function to simulate Zone 8 detection (for testing)
+      // Uncomment to test Zone 8 display
+      // setTimeout(() => {
+      //   document.getElementById("zoneText").innerHTML = '<i class="fas fa-map"></i> You are at Zone 8';
+      //   showCropRecommendations();
+      // }, 1000);
     });
   </script>
 </body>
