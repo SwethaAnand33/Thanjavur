@@ -119,7 +119,7 @@ body::before {
   50% { width: 320px; opacity: 0.7; }
 }
 
-/* Main Card with Wooden Board Effect - COMPACT DESIGN */
+/* Main Card with Wooden Board Effect - ULTRA COMPACT */
 .wooden-board {
   background: 
     /* Wood texture */
@@ -127,36 +127,21 @@ body::before {
     /* Wood color gradient */
     linear-gradient(135deg, #8B4513, #A0522D, #8B4513);
   background-size: auto, cover;
-  padding: 25px; /* Reduced padding */
-  border-radius: 20px;
+  padding: 20px; /* Reduced further */
+  border-radius: 18px;
   box-shadow: 
     0 20px 40px rgba(0, 0, 0, 0.5),
     inset 0 1px 0 rgba(255, 255, 255, 0.3),
     inset 0 -1px 0 rgba(0, 0, 0, 0.2);
-  border: 12px solid #5D4037;
+  border: 10px solid #5D4037; /* Thinner border */
   position: relative;
-  max-width: 520px;
+  max-width: 500px; /* Slightly smaller */
   width: 100%;
   text-align: center;
   animation: boardAppear 1s ease-out;
   z-index: 5;
-  max-height: 580px; /* Fixed max height */
-  overflow-y: auto; /* Scroll only if absolutely needed */
-  overflow-x: hidden;
-}
-
-.wooden-board::-webkit-scrollbar {
-  width: 8px;
-}
-
-.wooden-board::-webkit-scrollbar-track {
-  background: rgba(139, 69, 19, 0.3);
-  border-radius: 4px;
-}
-
-.wooden-board::-webkit-scrollbar-thumb {
-  background: #8B4513;
-  border-radius: 4px;
+  /* NO fixed height, NO scrolling */
+  overflow: visible; /* No scrolling */
 }
 
 @keyframes boardAppear {
@@ -168,11 +153,11 @@ body::before {
 .wooden-board::before {
   content: '';
   position: absolute;
-  top: -30px;
+  top: -25px;
   left: 50%;
   transform: translateX(-50%);
-  width: 8px;
-  height: 40px;
+  width: 6px;
+  height: 35px;
   background: #8D6E63;
   border-radius: 4px;
   box-shadow: 0 5px 10px rgba(0,0,0,0.3);
@@ -181,64 +166,64 @@ body::before {
 .wooden-board::after {
   content: '';
   position: absolute;
-  top: -30px;
+  top: -25px;
   left: 50%;
   transform: translateX(-50%);
-  width: 50px;
-  height: 20px;
+  width: 45px;
+  height: 18px;
   background: #8D6E63;
   border-radius: 10px;
   box-shadow: 0 5px 10px rgba(0,0,0,0.3);
 }
 
-/* Header Styles */
+/* Header Styles - MORE COMPACT */
 .header {
-  margin-bottom: 15px; /* Reduced margin */
-  padding-bottom: 12px; /* Reduced padding */
+  margin-bottom: 12px; /* Reduced further */
+  padding-bottom: 10px; /* Reduced further */
   border-bottom: 3px dashed #D7CCC8;
   position: relative;
 }
 
 .header h2 {
-  font-size: 1rem; /* Slightly smaller */
+  font-size: 1.8rem; /* Smaller */
   color: #FFD700;
   text-shadow: 3px 3px 0 #5D4037, 5px 5px 0 rgba(0,0,0,0.2);
-  margin-bottom: 6px; /* Reduced margin */
+  margin-bottom: 4px; /* Reduced further */
   letter-spacing: 1px;
 }
 
 .header .sub {
-  font-size: 1rem; /* Slightly smaller */
+  font-size: 0.9rem; /* Smaller */
   color: #FFECB3;
   font-style: italic;
   text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
 }
 
-/* Button Styles - COMPACT */
+/* Button Styles - MORE COMPACT */
 .controls {
   display: flex;
   justify-content: center;
-  gap: 12px; /* Reduced gap */
-  margin: 15px 0; /* Reduced margin */
+  gap: 10px; /* Reduced further */
+  margin: 12px 0; /* Reduced further */
   flex-wrap: wrap;
 }
 
 .button {
   background: linear-gradient(to bottom, #388E3C, #1B5E20);
   border: none;
-  padding: 12px 22px; /* Reduced padding */
-  font-size: 1rem; /* Slightly smaller */
+  padding: 10px 18px; /* Reduced further */
+  font-size: 0.95rem; /* Smaller */
   border-radius: 50px;
   cursor: pointer;
   color: white;
   font-weight: 700;
-  box-shadow: 0 6px 0 #1B5E20, 0 10px 20px rgba(0,0,0,0.3);
+  box-shadow: 0 5px 0 #1B5E20, 0 8px 15px rgba(0,0,0,0.3);
   transition: all 0.2s;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px; /* Reduced gap */
-  min-width: 150px; /* Slightly smaller */
+  gap: 6px; /* Reduced further */
+  min-width: 140px; /* Smaller */
   position: relative;
   overflow: hidden;
 }
@@ -260,39 +245,39 @@ body::before {
 
 .button:hover {
   transform: translateY(-3px);
-  box-shadow: 0 8px 0 #1B5E20, 0 15px 25px rgba(0,0,0,0.4);
+  box-shadow: 0 7px 0 #1B5E20, 0 12px 20px rgba(0,0,0,0.4);
 }
 
 .button:active {
   transform: translateY(2px);
-  box-shadow: 0 4px 0 #1B5E20, 0 5px 10px rgba(0,0,0,0.3);
+  box-shadow: 0 3px 0 #1B5E20, 0 4px 8px rgba(0,0,0,0.3);
 }
 
 .button i {
-  font-size: 1.2rem; /* Slightly smaller */
+  font-size: 1.1rem; /* Smaller */
 }
 
 #stopBtn {
   background: linear-gradient(to bottom, #D32F2F, #B71C1C);
-  box-shadow: 0 6px 0 #B71C1C, 0 10px 20px rgba(0,0,0,0.3);
+  box-shadow: 0 5px 0 #B71C1C, 0 8px 15px rgba(0,0,0,0.3);
 }
 
 #stopBtn:hover {
-  box-shadow: 0 8px 0 #B71C1C, 0 15px 25px rgba(0,0,0,0.4);
+  box-shadow: 0 7px 0 #B71C1C, 0 12px 20px rgba(0,0,0,0.4);
 }
 
 #stopBtn:active {
-  box-shadow: 0 4px 0 #B71C1C, 0 5px 10px rgba(0,0,0,0.3);
+  box-shadow: 0 3px 0 #B71C1C, 0 4px 8px rgba(0,0,0,0.3);
 }
 
-/* Info Display - COMPACT */
+/* Info Display - ULTRA COMPACT */
 .info-display {
   background: rgba(255, 255, 255, 0.95);
-  border-radius: 15px;
-  padding: 15px; /* Reduced padding */
-  margin-top: 15px; /* Reduced margin */
-  box-shadow: inset 0 0 15px rgba(0,0,0,0.1);
-  border: 5px solid #8D6E63;
+  border-radius: 12px; /* Smaller */
+  padding: 12px; /* Reduced further */
+  margin-top: 12px; /* Reduced further */
+  box-shadow: inset 0 0 12px rgba(0,0,0,0.1);
+  border: 4px solid #8D6E63; /* Thinner border */
   animation: fadeIn 1s ease-out;
 }
 
@@ -301,112 +286,124 @@ body::before {
   to { opacity: 1; transform: translateY(0); }
 }
 
+/* LATITUDE & LONGITUDE IN ONE LINE */
 .location-info {
-  font-size: 1rem; /* Slightly smaller */
-  line-height: 1.5; /* Tighter line height */
-  margin-bottom: 12px; /* Reduced margin */
+  font-size: 0.95rem; /* Smaller */
+  line-height: 1.4; /* Tighter */
+  margin-bottom: 10px; /* Reduced further */
   color: #4E342E;
   text-align: left;
-  padding: 10px;
+  padding: 8px 10px; /* Reduced padding */
   background: #F5F5F5;
-  border-radius: 10px;
-  border-left: 5px solid #388E3C;
+  border-radius: 8px;
+  border-left: 4px solid #388E3C; /* Thinner border */
+  white-space: nowrap; /* Keep on one line */
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-/* Updated Zone Display with smaller font size */
+/* Zone Display - SMALLER */
 .zone-display {
-  font-size: 1.3rem; /* Slightly smaller */
+  font-size: 1.1rem; /* Much smaller */
   font-weight: 800;
   color: #D32F2F;
   background: #FFECB3;
-  padding: 10px; /* Reduced padding */
-  border-radius: 10px;
-  margin: 8px 0; /* Reduced margin */
-  border: 3px dashed #FFA000;
+  padding: 8px; /* Reduced further */
+  border-radius: 8px;
+  margin: 6px 0; /* Reduced further */
+  border: 2px dashed #FFA000; /* Thinner border */
   text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
   animation: pulse 2s infinite;
 }
 
 @keyframes pulse {
   0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.02); }
+  50% { transform: scale(1.01); } /* Smaller pulse */
 }
 
+/* Status Display - SMALLER */
 .status-display {
-  font-size: 0.9rem; /* Slightly smaller */
+  font-size: 0.85rem; /* Smaller */
   color: #5D4037;
   background: #C8E6C9;
-  padding: 10px; /* Reduced padding */
-  border-radius: 10px;
+  padding: 8px; /* Reduced further */
+  border-radius: 8px;
   font-weight: 600;
-  border: 2px solid #388E3C;
-  margin-top: 8px; /* Reduced margin */
+  border: 2px solid #388E3C; /* Thinner border */
+  margin-top: 6px; /* Reduced further */
 }
 
-/* Crops Recommendation Section - COMPACT DESIGN */
+/* Crops Recommendation Section - ULTRA COMPACT */
 .crops-recommendation {
   background: rgba(255, 248, 225, 0.95);
-  border-radius: 12px; /* Smaller radius */
-  padding: 15px; /* Reduced padding */
-  margin-top: 12px; /* Reduced margin */
-  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-  border: 6px solid #8D6E63; /* Thinner border */
+  border-radius: 10px; /* Smaller */
+  padding: 12px; /* Reduced further */
+  margin-top: 10px; /* Reduced further */
+  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+  border: 5px solid #8D6E63; /* Thinner border */
   animation: slideUp 1s ease-out;
   display: none; /* Hidden by default, shown when zone 18 is detected */
 }
 
 @keyframes slideUp {
-  from { opacity: 0; transform: translateY(20px); }
+  from { opacity: 0; transform: translateY(15px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 .crops-recommendation h3 {
   color: #5D4037;
-  font-size: 1.3rem; /* Smaller font */
-  margin-bottom: 12px; /* Reduced margin */
+  font-size: 1.1rem; /* Smaller */
+  margin-bottom: 10px; /* Reduced further */
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px; /* Reduced gap */
+  gap: 6px; /* Reduced further */
 }
 
 .crops-recommendation h3 i {
   color: #388E3C;
+  font-size: 1rem; /* Smaller */
 }
 
+/* 2x2 Matrix - COMPACT */
 .crops-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* Always 2 columns */
-  gap: 10px; /* Reduced gap */
-  margin-top: 12px; /* Reduced margin */
+  grid-template-columns: repeat(2, 1fr); /* Fixed 2x2 grid */
+  gap: 8px; /* Reduced further */
+  margin-top: 10px; /* Reduced further */
 }
 
 .crop-item {
   background: white;
-  border-radius: 8px; /* Smaller radius */
-  padding: 10px 8px; /* Reduced padding */
+  border-radius: 6px; /* Smaller */
+  padding: 8px 6px; /* Reduced further */
   text-align: center;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
   transition: all 0.3s;
   border: 2px solid #C8E6C9;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 70px; /* Fixed height for consistency */
 }
 
 .crop-item:hover {
-  transform: translateY(-3px); /* Smaller hover effect */
-  box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+  transform: translateY(-2px); /* Smaller hover effect */
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
   border-color: #388E3C;
 }
 
 .crop-icon {
-  font-size: 1.6rem; /* Smaller icons */
-  margin-bottom: 8px; /* Reduced margin */
+  font-size: 1.3rem; /* Smaller icons */
+  margin-bottom: 5px; /* Reduced further */
   color: #388E3C;
 }
 
 .crop-name {
   font-weight: 700;
   color: #5D4033;
-  font-size: 0.9rem; /* Smaller font */
+  font-size: 0.8rem; /* Smaller font */
+  line-height: 1.2;
 }
 
 /* Responsive Design */
@@ -416,13 +413,16 @@ body::before {
   }
   
   .farmer-character {
-    width: 320px; /* Slightly smaller on tablets */
+    width: 320px;
     height: 480px;
   }
   
   .wooden-board {
-    max-width: 480px;
-    max-height: 540px;
+    max-width: 460px;
+  }
+  
+  .header h2 {
+    font-size: 1.6rem;
   }
 }
 
@@ -434,29 +434,37 @@ body::before {
   }
   
   .farmer-character {
-    width: 280px; /* Still large on mobile */
+    width: 280px;
     height: 420px;
-    margin-bottom: -30px;
+    margin-bottom: -20px;
   }
   
   .wooden-board {
-    padding: 20px;
-    max-width: 450px;
-    max-height: 500px;
+    padding: 18px;
+    max-width: 420px;
   }
   
   .header h2 {
-    font-size: 1.7rem;
+    font-size: 1.5rem;
   }
   
   .button {
-    padding: 10px 18px;
-    font-size: 0.95rem;
-    min-width: 140px;
+    padding: 9px 16px;
+    font-size: 0.9rem;
+    min-width: 130px;
+  }
+  
+  .location-info {
+    font-size: 0.9rem;
+    white-space: normal; /* Allow wrapping on mobile */
   }
   
   .zone-display {
-    font-size: 1.1rem;
+    font-size: 1rem;
+  }
+  
+  .crop-item {
+    min-height: 65px;
   }
 }
 
@@ -468,17 +476,20 @@ body::before {
   .farmer-character {
     width: 220px;
     height: 330px;
-    margin-bottom: -20px;
+    margin-bottom: -15px;
   }
   
   .wooden-board {
     padding: 15px;
     max-width: 100%;
-    max-height: 480px;
   }
   
   .header h2 {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
+  }
+  
+  .header .sub {
+    font-size: 0.8rem;
   }
   
   .controls {
@@ -488,15 +499,43 @@ body::before {
   
   .button {
     width: 100%;
-    max-width: 260px;
+    max-width: 240px;
+    padding: 8px 14px;
   }
   
-  .crops-grid {
-    grid-template-columns: 1fr; /* Single column on very small screens */
+  .location-info {
+    font-size: 0.85rem;
   }
   
   .zone-display {
+    font-size: 0.95rem;
+    padding: 6px;
+  }
+  
+  .status-display {
+    font-size: 0.8rem;
+    padding: 6px;
+  }
+  
+  .crops-recommendation h3 {
     font-size: 1rem;
+  }
+  
+  .crops-grid {
+    gap: 6px;
+  }
+  
+  .crop-item {
+    padding: 6px 4px;
+    min-height: 60px;
+  }
+  
+  .crop-icon {
+    font-size: 1.1rem;
+  }
+  
+  .crop-name {
+    font-size: 0.75rem;
   }
 }
 
@@ -514,8 +553,8 @@ body::before {
 /* Add highlight for Zone 18 specifically */
 .zone-18-highlight {
   animation: highlight 2s infinite;
-  border: 3px solid #388E3C;
-  box-shadow: 0 0 15px rgba(56, 142, 60, 0.5);
+  border: 2px solid #388E3C; /* Thinner border */
+  box-shadow: 0 0 10px rgba(56, 142, 60, 0.5);
 }
 </style>
 </head>
@@ -534,11 +573,11 @@ body::before {
       <div class="farmer-shadow"></div>
     </div>
 
-    <!-- Main Wooden Board - COMPACT -->
+    <!-- Main Wooden Board - ULTRA COMPACT -->
     <div class="wooden-board">
       <div class="header">
-        <h2><i class="fas fa-tractor"></i> Find what's best for your Land</h2>
-        <div class="sub">Live Zone Tracker & Crop Advisor</div>
+        <h2><i class="fas fa-tractor"></i> Thanjavur Land Zone Locator</h2>
+        <div class="sub">Live Farmer Location Tracker & Crop Advisor</div>
       </div>
 
       <div class="controls">
@@ -551,19 +590,20 @@ body::before {
       </div>
 
       <div class="info-display">
+        <!-- LATITUDE & LONGITUDE IN ONE LINE -->
         <div class="location-info" id="location">
-          <strong><i class="fas fa-map-marker-alt"></i> Current Location:</strong><br>
-          Latitude: -- <br>
-          Longitude: --
+          <strong><i class="fas fa-map-marker-alt"></i> Location:</strong> 
+          Lat: --, Lon: --
         </div>
 
+        <!-- SMALLER ZONE DISPLAY -->
         <div class="zone-display" id="zoneText">
           <i class="fas fa-map"></i> Zone: --
         </div>
 
-        <!-- Crop Recommendations Section (Will be shown for Zone 18) -->
+        <!-- COMPACT 2x2 CROP RECOMMENDATIONS -->
         <div class="crops-recommendation" id="cropsRecommendation">
-          <h3><i class="fas fa-seedling"></i> Recommended Crops for Zone 18</h3>
+          <h3><i class="fas fa-seedling"></i> Crops for Zone 18</h3>
           <div class="crops-grid" id="cropsGrid">
             <!-- Crops will be dynamically inserted here -->
           </div>
@@ -577,7 +617,7 @@ body::before {
   </div>
 
   <script>
-    // Zone data (53 zones) - unchanged from original
+    // Zone data (53 zones)
     const zones = [
       {id:1,left:79.37824729,right:79.47824729,top:11.18198544,bottom:11.08198544},
       {id:2,left:79.47824729,right:79.57824729,top:11.18198544,bottom:11.08198544},
@@ -634,7 +674,7 @@ body::before {
       {id:53,left:79.17824729,right:79.27824729,top:10.18198544,bottom:10.08198544}
     ];
 
-    // CORRECTED: Crop data for Zone 18 (not Zone 8)
+    // Crop data for Zone 18
     const zone18Crops = [
       { name: "Finger Millet", icon: "fas fa-wheat-awn" },
       { name: "Little Millet", icon: "fas fa-wheat-alt" },
@@ -656,18 +696,18 @@ body::before {
       return Math.sqrt((lat - clat)**2 + (lon - clon)**2);
     }
 
-    // Function to show crop recommendations for Zone 18 (NOT Zone 8)
+    // Function to show crop recommendations for Zone 18
     function showCropRecommendations() {
       const cropsRec = document.getElementById("cropsRecommendation");
       const cropsGrid = document.getElementById("cropsGrid");
       
       // Update heading to show Zone 18
-      cropsRec.querySelector('h3').innerHTML = '<i class="fas fa-seedling"></i> Recommended Crops for Zone 18';
+      cropsRec.querySelector('h3').innerHTML = '<i class="fas fa-seedling"></i> Crops for Zone 18';
       
       // Clear any existing crops
       cropsGrid.innerHTML = "";
       
-      // Add crops for Zone 18
+      // Add crops for Zone 18 in 2x2 grid
       zone18Crops.forEach(crop => {
         const cropElement = document.createElement("div");
         cropElement.className = "crop-item";
@@ -711,10 +751,10 @@ body::before {
           const lat = position.coords.latitude;
           const lon = position.coords.longitude;
 
+          // SINGLE LINE location display
           document.getElementById("location").innerHTML = `
-            <strong><i class="fas fa-map-marker-alt"></i> Current Location:</strong><br>
-            Latitude: ${lat.toFixed(6)} <br>
-            Longitude: ${lon.toFixed(6)}
+            <strong><i class="fas fa-map-marker-alt"></i> Location:</strong> 
+            Lat: ${lat.toFixed(6)}, Lon: ${lon.toFixed(6)}
           `;
 
           let foundZone = null;
@@ -729,10 +769,10 @@ body::before {
 
           if (foundZone) {
             const zoneDisplay = document.getElementById("zoneText");
-            zoneDisplay.innerHTML = `<i class="fas fa-map"></i> You are at Zone ${foundZone.id}`;
+            zoneDisplay.innerHTML = `<i class="fas fa-map"></i> Zone: ${foundZone.id}`;
             zoneDisplay.classList.add("highlight-zone");
             
-            // CORRECTED: Check for Zone 18 (not Zone 8)
+            // Check for Zone 18
             if (foundZone.id === 18) {
               showCropRecommendations();
             } else {
@@ -757,7 +797,7 @@ body::before {
             }
 
             document.getElementById("zoneText").innerHTML = 
-              `<i class="fas fa-map"></i> You are not in any zone. Nearest is Zone ${nearestZone.id}`;
+              `<i class="fas fa-map"></i> Nearest Zone: ${nearestZone.id}`;
               
             // Hide crop recommendations if not in zone 18
             hideCropRecommendations();
