@@ -808,7 +808,7 @@ body::before {
         () => startTracking(),
         (err) => {
           console.error("Permission denied", err);
-          document.getElementById("status").innerHTML = `<i class="fas fa-lock"></i> Permission Denied.. Please allow location in browser settings.`;
+          document.getElementById("status").innerHTML = `<i class="fas fa-lock"></i> Permission Denied. Please allow location in browser settings.`;
         }
       );
     }
