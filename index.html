@@ -6,6 +6,7 @@
 <title>Thanjavur Land Zone Locator</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
+/* Base Styles */
 * {
   margin: 0;
   padding: 0;
@@ -18,13 +19,19 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, #1a472a 0%, #2e7d32 100%);
+  background: 
+    /* Your background image without green overlay */
+    url('background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
   color: #3e2723;
   padding: 20px;
   position: relative;
   overflow-x: hidden;
 }
 
+/* Animated background elements - lighter overlay for better text visibility */
 body::before {
   content: '';
   position: absolute;
@@ -36,6 +43,7 @@ body::before {
   z-index: -1;
 }
 
+/* Floating particles animation */
 @keyframes float {
   0%, 100% { transform: translateY(0) rotate(0deg); }
   50% { transform: translateY(-20px) rotate(180deg); }
@@ -51,6 +59,7 @@ body::before {
   z-index: -1;
 }
 
+/* Main Container */
 .container {
   display: flex;
   align-items: flex-end;
@@ -61,11 +70,12 @@ body::before {
   position: relative;
 }
 
+/* GIANT Farmer Image - 3/4th of board height */
 .farmer-character {
   position: relative;
   z-index: 10;
-  width: 380px;
-  height: 550px;
+  width: 380px; /* GIANT SIZE */
+  height: 550px; /* GIANT SIZE */
   animation: farmerBounce 3s infinite ease-in-out;
   filter: drop-shadow(10px 10px 20px rgba(0,0,0,0.5));
   transform-style: preserve-3d;
@@ -82,40 +92,22 @@ body::before {
 .farmer-image {
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, #5d4037, #8d6e63);
-  border-radius: 20px;
+  background: 
+    /* Replace with your farmer image */
+    url('farmer.png') no-repeat center bottom;
+  background-size: contain;
   position: relative;
   transform: rotateY(-8deg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
 }
 
-.farmer-image::before {
-  content: '👨‍🌾';
-  font-size: 180px;
-  position: absolute;
-  bottom: 20px;
-}
-
-.farmer-image::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 40%;
-  background: linear-gradient(to top, #388e3c, transparent);
-}
-
+/* 3D effect for farmer */
 .farmer-shadow {
   position: absolute;
   bottom: -35px;
   left: 50%;
   transform: translateX(-50%) rotateX(60deg);
-  width: 280px;
-  height: 60px;
+  width: 280px; /* Larger shadow for giant farmer */
+  height: 60px; /* Larger shadow for giant farmer */
   background: rgba(0, 0, 0, 0.5);
   border-radius: 50%;
   filter: blur(15px);
@@ -127,25 +119,29 @@ body::before {
   50% { width: 320px; opacity: 0.7; }
 }
 
+/* Main Card with Wooden Board Effect - ULTRA COMPACT */
 .wooden-board {
   background: 
-    url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%238B4513"/><path d="M0,50 Q25,40 50,50 T100,50" stroke="%235D4037" stroke-width="2" fill="none"/><path d="M0,30 Q25,20 50,30 T100,30" stroke="%235D4037" stroke-width="1" fill="none"/><path d="M0,70 Q25,60 50,70 T100,70" stroke="%235D4037" stroke-width="1" fill="none"/></svg>'),
+    /* Wood texture */
+    url('https://www.transparenttextures.com/patterns/wood-pattern.png'),
+    /* Wood color gradient */
     linear-gradient(135deg, #8B4513, #A0522D, #8B4513);
   background-size: auto, cover;
-  padding: 20px;
+  padding: 20px; /* Reduced further */
   border-radius: 18px;
   box-shadow: 
     0 20px 40px rgba(0, 0, 0, 0.5),
     inset 0 1px 0 rgba(255, 255, 255, 0.3),
     inset 0 -1px 0 rgba(0, 0, 0, 0.2);
-  border: 10px solid #5D4037;
+  border: 10px solid #5D4037; /* Thinner border */
   position: relative;
-  max-width: 500px;
+  max-width: 500px; /* Slightly smaller */
   width: 100%;
   text-align: center;
   animation: boardAppear 1s ease-out;
   z-index: 5;
-  overflow: visible;
+  /* NO fixed height, NO scrolling */
+  overflow: visible; /* No scrolling */
 }
 
 @keyframes boardAppear {
@@ -153,6 +149,7 @@ body::before {
   100% { transform: scale(1) rotate(0); opacity: 1; }
 }
 
+/* Rope holding effect */
 .wooden-board::before {
   content: '';
   position: absolute;
@@ -179,41 +176,43 @@ body::before {
   box-shadow: 0 5px 10px rgba(0,0,0,0.3);
 }
 
+/* Header Styles - MORE COMPACT */
 .header {
-  margin-bottom: 12px;
-  padding-bottom: 10px;
+  margin-bottom: 12px; /* Reduced further */
+  padding-bottom: 10px; /* Reduced further */
   border-bottom: 3px dashed #D7CCC8;
   position: relative;
 }
 
 .header h2 {
-  font-size: 1.8rem;
+  font-size: 1.8rem; /* Smaller */
   color: #FFD700;
   text-shadow: 3px 3px 0 #5D4037, 5px 5px 0 rgba(0,0,0,0.2);
-  margin-bottom: 4px;
+  margin-bottom: 4px; /* Reduced further */
   letter-spacing: 1px;
 }
 
 .header .sub {
-  font-size: 0.9rem;
+  font-size: 0.9rem; /* Smaller */
   color: #FFECB3;
   font-style: italic;
   text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
 }
 
+/* Button Styles - MORE COMPACT */
 .controls {
   display: flex;
   justify-content: center;
-  gap: 10px;
-  margin: 12px 0;
+  gap: 10px; /* Reduced further */
+  margin: 12px 0; /* Reduced further */
   flex-wrap: wrap;
 }
 
 .button {
   background: linear-gradient(to bottom, #388E3C, #1B5E20);
   border: none;
-  padding: 10px 18px;
-  font-size: 0.95rem;
+  padding: 10px 18px; /* Reduced further */
+  font-size: 0.95rem; /* Smaller */
   border-radius: 50px;
   cursor: pointer;
   color: white;
@@ -223,8 +222,8 @@ body::before {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  min-width: 140px;
+  gap: 6px; /* Reduced further */
+  min-width: 140px; /* Smaller */
   position: relative;
   overflow: hidden;
 }
@@ -255,7 +254,7 @@ body::before {
 }
 
 .button i {
-  font-size: 1.1rem;
+  font-size: 1.1rem; /* Smaller */
 }
 
 #stopBtn {
@@ -271,13 +270,14 @@ body::before {
   box-shadow: 0 3px 0 #B71C1C, 0 4px 8px rgba(0,0,0,0.3);
 }
 
+/* Info Display - ULTRA COMPACT */
 .info-display {
   background: rgba(255, 255, 255, 0.95);
-  border-radius: 12px;
-  padding: 12px;
-  margin-top: 12px;
+  border-radius: 12px; /* Smaller */
+  padding: 12px; /* Reduced further */
+  margin-top: 12px; /* Reduced further */
   box-shadow: inset 0 0 12px rgba(0,0,0,0.1);
-  border: 4px solid #8D6E63;
+  border: 4px solid #8D6E63; /* Thinner border */
   animation: fadeIn 1s ease-out;
 }
 
@@ -286,59 +286,63 @@ body::before {
   to { opacity: 1; transform: translateY(0); }
 }
 
+/* LATITUDE & LONGITUDE IN ONE LINE */
 .location-info {
-  font-size: 0.95rem;
-  line-height: 1.4;
-  margin-bottom: 10px;
+  font-size: 0.95rem; /* Smaller */
+  line-height: 1.4; /* Tighter */
+  margin-bottom: 10px; /* Reduced further */
   color: #4E342E;
   text-align: left;
-  padding: 8px 10px;
+  padding: 8px 10px; /* Reduced padding */
   background: #F5F5F5;
   border-radius: 8px;
-  border-left: 4px solid #388E3C;
-  white-space: nowrap;
+  border-left: 4px solid #388E3C; /* Thinner border */
+  white-space: nowrap; /* Keep on one line */
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
+/* Zone Display - SMALLER */
 .zone-display {
-  font-size: 1.1rem;
+  font-size: 1.1rem; /* Much smaller */
   font-weight: 800;
   color: #D32F2F;
   background: #FFECB3;
-  padding: 8px;
+  padding: 8px; /* Reduced further */
   border-radius: 8px;
-  margin: 6px 0;
-  border: 2px dashed #FFA000;
+  margin: 6px 0; /* Reduced further */
+  border: 2px dashed #FFA000; /* Thinner border */
   text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
   animation: pulse 2s infinite;
 }
 
 @keyframes pulse {
   0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.01); }
+  50% { transform: scale(1.01); } /* Smaller pulse */
 }
 
+/* Status Display - SMALLER */
 .status-display {
-  font-size: 0.85rem;
+  font-size: 0.85rem; /* Smaller */
   color: #5D4037;
   background: #C8E6C9;
-  padding: 8px;
+  padding: 8px; /* Reduced further */
   border-radius: 8px;
   font-weight: 600;
-  border: 2px solid #388E3C;
-  margin-top: 6px;
+  border: 2px solid #388E3C; /* Thinner border */
+  margin-top: 6px; /* Reduced further */
 }
 
+/* Crops Recommendation Section - ULTRA COMPACT */
 .crops-recommendation {
   background: rgba(255, 248, 225, 0.95);
-  border-radius: 10px;
-  padding: 12px;
-  margin-top: 10px;
+  border-radius: 10px; /* Smaller */
+  padding: 12px; /* Reduced further */
+  margin-top: 10px; /* Reduced further */
   box-shadow: 0 6px 15px rgba(0,0,0,0.2);
-  border: 5px solid #8D6E63;
+  border: 5px solid #8D6E63; /* Thinner border */
   animation: slideUp 1s ease-out;
-  display: none;
+  display: none; /* Hidden by default, shown when zone 18 is detected */
 }
 
 @keyframes slideUp {
@@ -348,30 +352,31 @@ body::before {
 
 .crops-recommendation h3 {
   color: #5D4037;
-  font-size: 1.1rem;
-  margin-bottom: 10px;
+  font-size: 1.1rem; /* Smaller */
+  margin-bottom: 10px; /* Reduced further */
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 6px; /* Reduced further */
 }
 
 .crops-recommendation h3 i {
   color: #388E3C;
-  font-size: 1rem;
+  font-size: 1rem; /* Smaller */
 }
 
+/* 2x2 Matrix - COMPACT */
 .crops-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 8px;
-  margin-top: 10px;
+  grid-template-columns: repeat(2, 1fr); /* Fixed 2x2 grid */
+  gap: 8px; /* Reduced further */
+  margin-top: 10px; /* Reduced further */
 }
 
 .crop-item {
   background: white;
-  border-radius: 6px;
-  padding: 8px 6px;
+  border-radius: 6px; /* Smaller */
+  padding: 8px 6px; /* Reduced further */
   text-align: center;
   box-shadow: 0 3px 8px rgba(0,0,0,0.1);
   transition: all 0.3s;
@@ -379,28 +384,29 @@ body::before {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  min-height: 70px;
+  min-height: 70px; /* Fixed height for consistency */
 }
 
 .crop-item:hover {
-  transform: translateY(-2px);
+  transform: translateY(-2px); /* Smaller hover effect */
   box-shadow: 0 6px 12px rgba(0,0,0,0.15);
   border-color: #388E3C;
 }
 
 .crop-icon {
-  font-size: 1.3rem;
-  margin-bottom: 5px;
+  font-size: 1.3rem; /* Smaller icons */
+  margin-bottom: 5px; /* Reduced further */
   color: #388E3C;
 }
 
 .crop-name {
   font-weight: 700;
   color: #5D4033;
-  font-size: 0.8rem;
+  font-size: 0.8rem; /* Smaller font */
   line-height: 1.2;
 }
 
+/* Responsive Design */
 @media (max-width: 1024px) {
   .container {
     gap: 30px;
@@ -450,7 +456,7 @@ body::before {
   
   .location-info {
     font-size: 0.9rem;
-    white-space: normal;
+    white-space: normal; /* Allow wrapping on mobile */
   }
   
   .zone-display {
@@ -533,6 +539,7 @@ body::before {
   }
 }
 
+/* Animation for zone detection */
 @keyframes highlight {
   0% { background-color: #FFECB3; }
   50% { background-color: #FFF59D; }
@@ -543,86 +550,34 @@ body::before {
   animation: highlight 1s 3;
 }
 
-.zone-highlight {
+/* Add highlight for Zone 18 specifically */
+.zone-18-highlight {
   animation: highlight 2s infinite;
-  border: 2px solid #388E3C;
+  border: 2px solid #388E3C; /* Thinner border */
   box-shadow: 0 0 10px rgba(56, 142, 60, 0.5);
-}
-
-.csv-input-section {
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 10px;
-  padding: 15px;
-  margin-top: 15px;
-  border: 3px solid #8D6E63;
-}
-
-.csv-input-section h4 {
-  color: #5D4037;
-  font-size: 1rem;
-  margin-bottom: 10px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.csv-upload-btn {
-  background: linear-gradient(to bottom, #2196F3, #0D47A1);
-  border: none;
-  padding: 8px 16px;
-  font-size: 0.9rem;
-  border-radius: 5px;
-  cursor: pointer;
-  color: white;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  width: 100%;
-  justify-content: center;
-  transition: all 0.3s;
-}
-
-.csv-upload-btn:hover {
-  background: linear-gradient(to bottom, #1976D2, #0D47A1);
-  transform: translateY(-2px);
-}
-
-.csv-info {
-  font-size: 0.8rem;
-  color: #666;
-  margin-top: 8px;
-  text-align: center;
-  font-style: italic;
 }
 </style>
 </head>
 
 <body>
+  <!-- Floating particles -->
   <div class="floating-particle" style="top: 10%; left: 5%; animation-delay: 0s;"></div>
   <div class="floating-particle" style="top: 20%; right: 10%; animation-delay: 1s; width: 30px; height: 30px;"></div>
   <div class="floating-particle" style="top: 60%; left: 15%; animation-delay: 2s; width: 25px; height: 25px;"></div>
   <div class="floating-particle" style="top: 80%; right: 20%; animation-delay: 3s;"></div>
   
   <div class="container">
+    <!-- GIANT Farmer Character with Image -->
     <div class="farmer-character">
       <div class="farmer-image"></div>
       <div class="farmer-shadow"></div>
     </div>
 
+    <!-- Main Wooden Board - ULTRA COMPACT -->
     <div class="wooden-board">
       <div class="header">
-        <h2><i class="fas fa-tractor"></i> Thanjavur Crop Advisor</h2>
-        <div class="sub">Live Zone Tracker & Crop Recommendations</div>
-      </div>
-
-      <div class="csv-input-section">
-        <h4><i class="fas fa-file-csv"></i> Load Crop Database</h4>
-        <button class="csv-upload-btn" onclick="document.getElementById('csvFileInput').click()">
-          <i class="fas fa-upload"></i> Upload zone_crops.csv File
-        </button>
-        <input type="file" id="csvFileInput" accept=".csv" style="display: none;" onchange="handleCSVUpload(event)">
-        <div class="csv-info">Upload your CSV file with zone-crop data</div>
+        <h2><i class="fas fa-tractor"></i> Find the best Crop for your Land</h2>
+        <div class="sub">Live Zone Tracker & Crop Advisor</div>
       </div>
 
       <div class="controls">
@@ -635,24 +590,27 @@ body::before {
       </div>
 
       <div class="info-display">
+        <!-- LATITUDE & LONGITUDE IN ONE LINE -->
         <div class="location-info" id="location">
           <strong><i class="fas fa-map-marker-alt"></i> Location:</strong> 
           Lat: --, Lon: --
         </div>
 
+        <!-- SMALLER ZONE DISPLAY -->
         <div class="zone-display" id="zoneText">
           <i class="fas fa-map"></i> You are at Zone: --
         </div>
 
+        <!-- COMPACT 2x2 CROP RECOMMENDATIONS -->
         <div class="crops-recommendation" id="cropsRecommendation">
-          <h3><i class="fas fa-seedling"></i> Crops for Zone <span id="currentZone">--</span></h3>
+          <h3><i class="fas fa-seedling"></i> Crops for Zone 18</h3>
           <div class="crops-grid" id="cropsGrid">
             <!-- Crops will be dynamically inserted here -->
           </div>
         </div>
 
         <div class="status-display" id="status">
-          <i class="fas fa-info-circle"></i> Status: Waiting for CSV upload
+          <i class="fas fa-info-circle"></i> Status: Idle
         </div>
       </div>
     </div>
@@ -716,105 +674,15 @@ body::before {
       {id:53,left:79.17824729,right:79.27824729,top:10.18198544,bottom:10.08198544}
     ];
 
-    // Global variable to store crop data
-    let cropData = {};
+    // Crop data for Zone 18
+    const zone18Crops = [
+      { name: "Finger Millet", icon: "fas fa-wheat-awn" },
+      { name: "Little Millet", icon: "fas fa-leaf" },
+      { name: "Maize", icon: "fas fa-spa" },
+      { name: "Sorghum", icon: "fas fa-seedling" }
+    ];
+
     let watchId = null;
-
-    // Function to handle CSV file upload
-    function handleCSVUpload(event) {
-      const file = event.target.files[0];
-      if (!file) return;
-
-      document.getElementById("status").innerHTML = '<i class="fas fa-sync-alt fa-spin"></i> Status: Loading CSV file...';
-
-      const reader = new FileReader();
-      
-      reader.onload = function(e) {
-        try {
-          const csvText = e.target.result;
-          parseCSV(csvText);
-          document.getElementById("status").innerHTML = '<i class="fas fa-check-circle"></i> Status: CSV loaded successfully';
-          alert(`Successfully loaded crop data for ${Object.keys(cropData).length} zones!`);
-        } catch (error) {
-          console.error('Error parsing CSV:', error);
-          document.getElementById("status").innerHTML = '<i class="fas fa-exclamation-triangle"></i> Status: Error parsing CSV';
-          alert('Error: Could not parse CSV file. Please check the file format.');
-        }
-      };
-      
-      reader.onerror = function() {
-        document.getElementById("status").innerHTML = '<i class="fas fa-exclamation-triangle"></i> Status: Error reading file';
-        alert('Error: Could not read the CSV file.');
-      };
-      
-      reader.readAsText(file);
-    }
-
-    // Parse CSV data function
-    function parseCSV(csvText) {
-      const lines = csvText.split('\n');
-      cropData = {};
-      
-      // Process each row in the CSV
-      for (let i = 0; i < lines.length; i++) {
-        const line = lines[i].trim();
-        
-        // Skip empty lines
-        if (!line) continue;
-        
-        // Skip header row
-        if (i === 0 && line.includes('Zone')) continue;
-        
-        // Parse the row data
-        let zoneId, cropsString;
-        
-        // Handle quoted crop lists that may contain commas
-        if (line.includes('"')) {
-          const firstCommaIndex = line.indexOf(',');
-          zoneId = line.substring(0, firstCommaIndex).trim();
-          
-          const quoteStart = line.indexOf('"') + 1;
-          const quoteEnd = line.lastIndexOf('"');
-          cropsString = line.substring(quoteStart, quoteEnd);
-        } else {
-          const parts = line.split(',');
-          zoneId = parts[0].trim();
-          cropsString = parts[1] ? parts[1].trim() : '';
-        }
-        
-        // Convert zoneId to number
-        const zoneNum = parseInt(zoneId);
-        
-        if (!isNaN(zoneNum) && cropsString) {
-          // Split crops by comma and trim each one
-          const crops = cropsString.split(',').map(crop => crop.trim());
-          cropData[zoneNum] = crops;
-        }
-      }
-      
-      console.log(`Loaded crop data for ${Object.keys(cropData).length} zones`, cropData);
-    }
-
-    // Function to get appropriate icon for each crop
-    function getCropIcon(cropName) {
-      const iconMap = {
-        'Finger Millet': 'fas fa-wheat-awn',
-        'Little Millet': 'fas fa-leaf',
-        'Maize': 'fas fa-spa',
-        'Sorghum': 'fas fa-seedling',
-        'Black Gram': 'fas fa-seedling',
-        'Pigeon Pea': 'fas fa-leaf',
-        'Brinjal': 'fas fa-seedling',
-        'Paddy': 'fas fa-water',
-        'Sugarcane': 'fas fa-tree',
-        'Tapioca': 'fas fa-root',
-        'Cowpea': 'fas fa-seedling',
-        'Foxtail Millet': 'fas fa-wheat-awn',
-        'Groundnut': 'fas fa-seedling'
-      };
-      
-      return iconMap[cropName] || 'fas fa-seedling';
-    }
 
     // Function to check if coordinates are inside a zone
     function insideZone(lat, lon, z) {
@@ -828,63 +696,35 @@ body::before {
       return Math.sqrt((lat - clat)**2 + (lon - clon)**2);
     }
 
-    // Function to show crop recommendations for any zone
-    function showCropRecommendations(zoneId) {
+    // Function to show crop recommendations for Zone 18
+    function showCropRecommendations() {
       const cropsRec = document.getElementById("cropsRecommendation");
       const cropsGrid = document.getElementById("cropsGrid");
-      const currentZoneSpan = document.getElementById("currentZone");
       
-      // Update heading with current zone
-      currentZoneSpan.textContent = zoneId;
+      // Update heading to show Zone 18
+      cropsRec.querySelector('h3').innerHTML = '<i class="fas fa-seedling"></i> Crops for Zone 18';
       
       // Clear any existing crops
       cropsGrid.innerHTML = "";
       
-      // Get crops for this zone from loaded CSV data
-      const crops = cropData[zoneId];
-      
-      if (crops && crops.length > 0) {
-        // Add crops in 2x2 grid (maximum 4 crops)
-        crops.slice(0, 4).forEach(crop => {
-          const cropElement = document.createElement("div");
-          cropElement.className = "crop-item";
-          cropElement.innerHTML = `
-            <div class="crop-icon"><i class="${getCropIcon(crop)}"></i></div>
-            <div class="crop-name">${crop}</div>
-          `;
-          cropsGrid.appendChild(cropElement);
-        });
-        
-        // Fill remaining spots if less than 4 crops
-        for (let i = crops.length; i < 4; i++) {
-          const cropElement = document.createElement("div");
-          cropElement.className = "crop-item";
-          cropElement.innerHTML = `
-            <div class="crop-icon"><i class="fas fa-seedling"></i></div>
-            <div class="crop-name">---</div>
-          `;
-          cropsGrid.appendChild(cropElement);
-        }
-        
-        // Show the recommendations section
-        cropsRec.style.display = "block";
-        cropsRec.style.animation = "slideUp 1s ease-out";
-        
-        // Add highlight for zone
-        const zoneDisplay = document.getElementById("zoneText");
-        zoneDisplay.classList.add("zone-highlight");
-      } else {
-        // No crops found for this zone
+      // Add crops for Zone 18 in 2x2 grid
+      zone18Crops.forEach(crop => {
         const cropElement = document.createElement("div");
         cropElement.className = "crop-item";
-        cropElement.style.gridColumn = "span 2";
         cropElement.innerHTML = `
-          <div class="crop-icon"><i class="fas fa-exclamation-circle"></i></div>
-          <div class="crop-name">No crop data for Zone ${zoneId}</div>
+          <div class="crop-icon"><i class="${crop.icon}"></i></div>
+          <div class="crop-name">${crop.name}</div>
         `;
         cropsGrid.appendChild(cropElement);
-        cropsRec.style.display = "block";
-      }
+      });
+      
+      // Show the recommendations section with animation
+      cropsRec.style.display = "block";
+      cropsRec.style.animation = "slideUp 1s ease-out";
+      
+      // Add special highlight class for Zone 18
+      const zoneDisplay = document.getElementById("zoneText");
+      zoneDisplay.classList.add("zone-18-highlight");
     }
 
     // Function to hide crop recommendations
@@ -892,21 +732,15 @@ body::before {
       const cropsRec = document.getElementById("cropsRecommendation");
       cropsRec.style.display = "none";
       
+      // Remove Zone 18 highlight
       const zoneDisplay = document.getElementById("zoneText");
-      zoneDisplay.classList.remove("zone-highlight");
+      zoneDisplay.classList.remove("zone-18-highlight");
     }
 
     // Main tracking function
     function startTracking() {
       if (!navigator.geolocation) {
         alert("Geolocation is not supported by your browser.");
-        return;
-      }
-
-      // Check if crop data is loaded
-      if (Object.keys(cropData).length === 0) {
-        alert("Please upload a CSV file first to load crop data.");
-        document.getElementById("status").innerHTML = '<i class="fas fa-exclamation-triangle"></i> Status: No crop data loaded';
         return;
       }
 
@@ -917,6 +751,7 @@ body::before {
           const lat = position.coords.latitude;
           const lon = position.coords.longitude;
 
+          // SINGLE LINE location display
           document.getElementById("location").innerHTML = `
             <strong><i class="fas fa-map-marker-alt"></i> Location:</strong> 
             Lat: ${lat.toFixed(6)}, Lon: ${lon.toFixed(6)}
@@ -937,9 +772,14 @@ body::before {
             zoneDisplay.innerHTML = `<i class="fas fa-map"></i> You are at Zone ${foundZone.id}`;
             zoneDisplay.classList.add("highlight-zone");
             
-            // Show crops for the detected zone
-            showCropRecommendations(foundZone.id);
+            // Check for Zone 18
+            if (foundZone.id === 18) {
+              showCropRecommendations();
+            } else {
+              hideCropRecommendations();
+            }
             
+            // Remove highlight class after animation completes
             setTimeout(() => {
               zoneDisplay.classList.remove("highlight-zone");
             }, 3000);
@@ -959,15 +799,15 @@ body::before {
             document.getElementById("zoneText").innerHTML = 
               `<i class="fas fa-map"></i> You are at Zone ${nearestZone.id}`;
               
-            // Show crops for the nearest zone
-            showCropRecommendations(nearestZone.id);
+            // Hide crop recommendations if not in zone 18
+            hideCropRecommendations();
           }
 
           document.getElementById("status").innerHTML = '<i class="fas fa-check-circle"></i> Status: Tracking live';
         },
         error => {
           console.error("Geolocation error:", error);
-          document.getElementById("status").innerHTML = `<i class="fas fa-exclamation-triangle"></i> Status: ${error.message}`;
+          document.getElementById("status").innerHTML = `<i class="fas fa-exclamation-triangle"></i> Status: Error - ${error.message}`;
         },
         {
           enableHighAccuracy: true,
@@ -989,12 +829,9 @@ body::before {
 
     // Initialize the page
     document.addEventListener('DOMContentLoaded', function() {
-      // Add initial animation to the board
+      // Add some initial animation to the board
       const board = document.querySelector('.wooden-board');
       board.style.animation = 'boardAppear 1s ease-out';
-      
-      console.log('Thanjavur Crop Advisor initialized');
-      console.log('Please upload a CSV file with zone-crop data to begin');
     });
   </script>
 </body>
