@@ -5,249 +5,880 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Thanjavur Land Zone Locator</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
 <style>
-/* ======= YOUR EXISTING CSS (UNCHANGED) ======= */
-/* (CSS kept exactly as your original – shortened here for clarity) */
+/* Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: url('background.jpg') center/cover fixed;
   min-height: 100vh;
-  margin: 0;
   display: flex;
   justify-content: center;
   align-items: center;
+  background: 
+    /* Your background image without green overlay */
+    url('background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  color: #3e2723;
+  padding: 20px;
+  position: relative;
+  overflow-x: hidden;
 }
 
+/* Animated background elements - lighter overlay for better text visibility */
+body::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  z-index: -1;
+}
+
+/* Floating particles animation */
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(180deg); }
+}
+
+.floating-particle {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%234CAF50"><path d="M12,2C8.1,2,5,5.1,5,9c0,5.2,7,13,7,13s7-7.8,7-13C19,5.1,15.9,2,12,2z M12,11.5c-1.4,0-2.5-1.1-2.5-2.5 s1.1-2.5,2.5-2.5s2.5,1.1,2.5,2.5S13.4,11.5,12,11.5z"/></svg>');
+  background-size: contain;
+  animation: float 6s infinite ease-in-out;
+  z-index: -1;
+}
+
+/* Main Container */
 .container {
   display: flex;
-  gap: 40px;
   align-items: flex-end;
+  justify-content: center;
+  max-width: 1300px;
+  width: 100%;
+  gap: 40px;
+  position: relative;
 }
 
+/* GIANT Farmer Image - 3/4th of board height */
 .farmer-character {
-  width: 380px;
-  height: 550px;
+  position: relative;
+  z-index: 10;
+  width: 380px; /* GIANT SIZE */
+  height: 550px; /* GIANT SIZE */
+  animation: farmerBounce 3s infinite ease-in-out;
+  filter: drop-shadow(10px 10px 20px rgba(0,0,0,0.5));
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+@keyframes farmerBounce {
+  0%, 100% { transform: translateY(0) rotateY(-8deg); }
+  25% { transform: translateY(-20px) rotateY(0deg); }
+  50% { transform: translateY(0) rotateY(8deg); }
+  75% { transform: translateY(-15px) rotateY(-4deg); }
 }
 
 .farmer-image {
-  background: url('farmer.png') no-repeat center bottom / contain;
   width: 100%;
   height: 100%;
+  background: 
+    /* Replace with your farmer image */
+    url('farmer.png') no-repeat center bottom;
+  background-size: contain;
+  position: relative;
+  transform: rotateY(-8deg);
 }
 
+/* 3D effect for farmer */
+.farmer-shadow {
+  position: absolute;
+  bottom: -35px;
+  left: 50%;
+  transform: translateX(-50%) rotateX(60deg);
+  width: 280px; /* Larger shadow for giant farmer */
+  height: 60px; /* Larger shadow for giant farmer */
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  filter: blur(15px);
+  animation: shadowPulse 3s infinite ease-in-out;
+}
+
+@keyframes shadowPulse {
+  0%, 100% { width: 280px; opacity: 0.5; }
+  50% { width: 320px; opacity: 0.7; }
+}
+
+/* Main Card with Wooden Board Effect - ULTRA COMPACT */
 .wooden-board {
-  background: linear-gradient(135deg,#8B4513,#A0522D,#8B4513);
-  border: 10px solid #5D4037;
-  padding: 20px;
+  background: 
+    /* Wood texture */
+    url('https://www.transparenttextures.com/patterns/wood-pattern.png'),
+    /* Wood color gradient */
+    linear-gradient(135deg, #8B4513, #A0522D, #8B4513);
+  background-size: auto, cover;
+  padding: 20px; /* Reduced further */
   border-radius: 18px;
-  width: 500px;
-  color: white;
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+  border: 10px solid #5D4037; /* Thinner border */
+  position: relative;
+  max-width: 500px; /* Slightly smaller */
+  width: 100%;
+  text-align: center;
+  animation: boardAppear 1s ease-out;
+  z-index: 5;
+  /* NO fixed height, NO scrolling */
+  overflow: visible; /* No scrolling */
+}
+
+@keyframes boardAppear {
+  0% { transform: scale(0.8) rotate(-5deg); opacity: 0; }
+  100% { transform: scale(1) rotate(0); opacity: 1; }
+}
+
+/* Rope holding effect */
+.wooden-board::before {
+  content: '';
+  position: absolute;
+  top: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 35px;
+  background: #8D6E63;
+  border-radius: 4px;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+}
+
+.wooden-board::after {
+  content: '';
+  position: absolute;
+  top: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 45px;
+  height: 18px;
+  background: #8D6E63;
+  border-radius: 10px;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+}
+
+/* Header Styles - MORE COMPACT */
+.header {
+  margin-bottom: 12px; /* Reduced further */
+  padding-bottom: 10px; /* Reduced further */
+  border-bottom: 3px dashed #D7CCC8;
+  position: relative;
+}
+
+.header h2 {
+  font-size: 1.8rem; /* Smaller */
+  color: #FFD700;
+  text-shadow: 3px 3px 0 #5D4037, 5px 5px 0 rgba(0,0,0,0.2);
+  margin-bottom: 4px; /* Reduced further */
+  letter-spacing: 1px;
+}
+
+.header .sub {
+  font-size: 0.9rem; /* Smaller */
+  color: #FFECB3;
+  font-style: italic;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}
+
+/* Button Styles - MORE COMPACT */
+.controls {
+  display: flex;
+  justify-content: center;
+  gap: 10px; /* Reduced further */
+  margin: 12px 0; /* Reduced further */
+  flex-wrap: wrap;
 }
 
 .button {
-  padding: 10px 18px;
-  border-radius: 50px;
+  background: linear-gradient(to bottom, #388E3C, #1B5E20);
   border: none;
-  font-weight: bold;
+  padding: 10px 18px; /* Reduced further */
+  font-size: 0.95rem; /* Smaller */
+  border-radius: 50px;
   cursor: pointer;
+  color: white;
+  font-weight: 700;
+  box-shadow: 0 5px 0 #1B5E20, 0 8px 15px rgba(0,0,0,0.3);
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px; /* Reduced further */
+  min-width: 140px; /* Smaller */
+  position: relative;
+  overflow: hidden;
+}
+
+.button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.7s;
+}
+
+.button:hover::before {
+  left: 100%;
+}
+
+.button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 7px 0 #1B5E20, 0 12px 20px rgba(0,0,0,0.4);
+}
+
+.button:active {
+  transform: translateY(2px);
+  box-shadow: 0 3px 0 #1B5E20, 0 4px 8px rgba(0,0,0,0.3);
+}
+
+.button i {
+  font-size: 1.1rem; /* Smaller */
 }
 
 #stopBtn {
-  background: #b71c1c;
-  color: white;
+  background: linear-gradient(to bottom, #D32F2F, #B71C1C);
+  box-shadow: 0 5px 0 #B71C1C, 0 8px 15px rgba(0,0,0,0.3);
 }
 
+#stopBtn:hover {
+  box-shadow: 0 7px 0 #B71C1C, 0 12px 20px rgba(0,0,0,0.4);
+}
+
+#stopBtn:active {
+  box-shadow: 0 3px 0 #B71C1C, 0 4px 8px rgba(0,0,0,0.3);
+}
+
+/* Info Display - ULTRA COMPACT */
 .info-display {
-  background: #fff;
-  color: #333;
-  padding: 12px;
-  border-radius: 10px;
-  margin-top: 10px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 12px; /* Smaller */
+  padding: 12px; /* Reduced further */
+  margin-top: 12px; /* Reduced further */
+  box-shadow: inset 0 0 12px rgba(0,0,0,0.1);
+  border: 4px solid #8D6E63; /* Thinner border */
+  animation: fadeIn 1s ease-out;
 }
 
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* LATITUDE & LONGITUDE IN ONE LINE */
+.location-info {
+  font-size: 0.95rem; /* Smaller */
+  line-height: 1.4; /* Tighter */
+  margin-bottom: 10px; /* Reduced further */
+  color: #4E342E;
+  text-align: left;
+  padding: 8px 10px; /* Reduced padding */
+  background: #F5F5F5;
+  border-radius: 8px;
+  border-left: 4px solid #388E3C; /* Thinner border */
+  white-space: nowrap; /* Keep on one line */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Zone Display - SMALLER */
+.zone-display {
+  font-size: 1.1rem; /* Much smaller */
+  font-weight: 800;
+  color: #D32F2F;
+  background: #FFECB3;
+  padding: 8px; /* Reduced further */
+  border-radius: 8px;
+  margin: 6px 0; /* Reduced further */
+  border: 2px dashed #FFA000; /* Thinner border */
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.01); } /* Smaller pulse */
+}
+
+/* Status Display - SMALLER */
+.status-display {
+  font-size: 0.85rem; /* Smaller */
+  color: #5D4037;
+  background: #C8E6C9;
+  padding: 8px; /* Reduced further */
+  border-radius: 8px;
+  font-weight: 600;
+  border: 2px solid #388E3C; /* Thinner border */
+  margin-top: 6px; /* Reduced further */
+}
+
+/* Crops Recommendation Section - ULTRA COMPACT */
 .crops-recommendation {
-  display: none;
-  margin-top: 10px;
+  background: rgba(255, 248, 225, 0.95);
+  border-radius: 10px; /* Smaller */
+  padding: 12px; /* Reduced further */
+  margin-top: 10px; /* Reduced further */
+  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+  border: 5px solid #8D6E63; /* Thinner border */
+  animation: slideUp 1s ease-out;
+  display: none; /* Hidden by default, shown when zone detected */
 }
 
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.crops-recommendation h3 {
+  color: #5D4037;
+  font-size: 1.1rem; /* Smaller */
+  margin-bottom: 10px; /* Reduced further */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px; /* Reduced further */
+}
+
+.crops-recommendation h3 i {
+  color: #388E3C;
+  font-size: 1rem; /* Smaller */
+}
+
+/* 2x2 Matrix - COMPACT */
 .crops-grid {
   display: grid;
-  grid-template-columns: repeat(2,1fr);
-  gap: 8px;
+  grid-template-columns: repeat(2, 1fr); /* Fixed 2x2 grid */
+  gap: 8px; /* Reduced further */
+  margin-top: 10px; /* Reduced further */
 }
 
 .crop-item {
   background: white;
-  padding: 8px;
-  border-radius: 6px;
+  border-radius: 6px; /* Smaller */
+  padding: 8px 6px; /* Reduced further */
   text-align: center;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+  transition: all 0.3s;
+  border: 2px solid #C8E6C9;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 70px; /* Fixed height for consistency */
+}
+
+.crop-item:hover {
+  transform: translateY(-2px); /* Smaller hover effect */
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+  border-color: #388E3C;
 }
 
 .crop-icon {
-  font-size: 1.4rem;
-  color: green;
+  font-size: 1.3rem; /* Smaller icons */
+  margin-bottom: 5px; /* Reduced further */
+  color: #388E3C;
+}
+
+.crop-name {
+  font-weight: 700;
+  color: #5D4033;
+  font-size: 0.8rem; /* Smaller font */
+  line-height: 1.2;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .container {
+    gap: 30px;
+  }
+  
+  .farmer-character {
+    width: 320px;
+    height: 480px;
+  }
+  
+  .wooden-board {
+    max-width: 460px;
+  }
+  
+  .header h2 {
+    font-size: 1.6rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  .farmer-character {
+    width: 280px;
+    height: 420px;
+    margin-bottom: -20px;
+  }
+  
+  .wooden-board {
+    padding: 18px;
+    max-width: 420px;
+  }
+  
+  .header h2 {
+    font-size: 1.5rem;
+  }
+  
+  .button {
+    padding: 9px 16px;
+    font-size: 0.9rem;
+    min-width: 130px;
+  }
+  
+  .location-info {
+    font-size: 0.9rem;
+    white-space: normal; /* Allow wrapping on mobile */
+  }
+  
+  .zone-display {
+    font-size: 1rem;
+  }
+  
+  .crop-item {
+    min-height: 65px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    gap: 10px;
+  }
+  
+  .farmer-character {
+    width: 220px;
+    height: 330px;
+    margin-bottom: -15px;
+  }
+  
+  .wooden-board {
+    padding: 15px;
+    max-width: 100%;
+  }
+  
+  .header h2 {
+    font-size: 1.3rem;
+  }
+  
+  .header .sub {
+    font-size: 0.8rem;
+  }
+  
+  .controls {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .button {
+    width: 100%;
+    max-width: 240px;
+    padding: 8px 14px;
+  }
+  
+  .location-info {
+    font-size: 0.85rem;
+  }
+  
+  .zone-display {
+    font-size: 0.95rem;
+    padding: 6px;
+  }
+  
+  .status-display {
+    font-size: 0.8rem;
+    padding: 6px;
+  }
+  
+  .crops-recommendation h3 {
+    font-size: 1rem;
+  }
+  
+  .crops-grid {
+    gap: 6px;
+  }
+  
+  .crop-item {
+    padding: 6px 4px;
+    min-height: 60px;
+  }
+  
+  .crop-icon {
+    font-size: 1.1rem;
+  }
+  
+  .crop-name {
+    font-size: 0.75rem;
+  }
+}
+
+/* Animation for zone detection */
+@keyframes highlight {
+  0% { background-color: #FFECB3; }
+  50% { background-color: #FFF59D; }
+  100% { background-color: #FFECB3; }
+}
+
+.highlight-zone {
+  animation: highlight 1s 3;
+}
+
+/* Add highlight for Zone 18 specifically */
+.zone-18-highlight {
+  animation: highlight 2s infinite;
+  border: 2px solid #388E3C; /* Thinner border */
+  box-shadow: 0 0 10px rgba(56, 142, 60, 0.5);
 }
 </style>
 </head>
 
 <body>
-
-<div class="container">
-
-  <div class="farmer-character">
-    <div class="farmer-image"></div>
-  </div>
-
-  <div class="wooden-board">
-
-    <h2><i class="fas fa-tractor"></i> Find the best Crop for your Land</h2>
-
-    <button class="button" onclick="startTracking()">
-      <i class="fas fa-play-circle"></i> Start Tracking
-    </button>
-    <button class="button" id="stopBtn" onclick="stopTracking()">
-      <i class="fas fa-stop-circle"></i> Stop Tracking
-    </button>
-
-    <div class="info-display">
-      <div id="location">
-        <b>Location:</b> Lat: -- , Lon: --
-      </div>
-
-      <div id="zoneText">
-        <b>Zone:</b> --
-      </div>
-
-      <div class="crops-recommendation" id="cropsRecommendation">
-        <h3 id="cropTitle"></h3>
-        <div class="crops-grid" id="cropsGrid"></div>
-      </div>
-
-      <div id="status">
-        Status: Idle
-      </div>
+  <div class="floating-particle" style="top: 10%; left: 5%; animation-delay: 0s;"></div>
+  <div class="floating-particle" style="top: 20%; right: 10%; animation-delay: 1s; width: 30px; height: 30px;"></div>
+  <div class="floating-particle" style="top: 60%; left: 15%; animation-delay: 2s; width: 25px; height: 25px;"></div>
+  <div class="floating-particle" style="top: 80%; right: 20%; animation-delay: 3s;"></div>
+  
+  <div class="container">
+    <div class="farmer-character">
+      <div class="farmer-image"></div>
+      <div class="farmer-shadow"></div>
     </div>
 
+    <div class="wooden-board">
+      <div class="header">
+        <h2><i class="fas fa-tractor"></i> Find the best Crop for your Land</h2>
+        <div class="sub">Live Zone Tracker & Crop Advisor</div>
+      </div>
+
+      <div class="controls">
+        <button class="button" id="startBtn" onclick="startTracking()">
+          <i class="fas fa-play-circle"></i> Start Tracking
+        </button>
+        <button class="button" id="stopBtn" onclick="stopTracking()">
+          <i class="fas fa-stop-circle"></i> Stop Tracking
+        </button>
+      </div>
+
+      <div class="info-display">
+        <div class="location-info" id="location">
+          <strong><i class="fas fa-map-marker-alt"></i> Location:</strong> 
+          Lat: --, Lon: --
+        </div>
+
+        <div class="zone-display" id="zoneText">
+          <i class="fas fa-map"></i> You are at Zone: --
+        </div>
+
+        <div class="crops-recommendation" id="cropsRecommendation">
+          <h3><i class="fas fa-seedling"></i> Crops Recommended</h3>
+          <div class="crops-grid" id="cropsGrid">
+            </div>
+        </div>
+
+        <div class="status-display" id="status">
+          <i class="fas fa-info-circle"></i> Status: Idle
+        </div>
+      </div>
+    </div>
   </div>
-</div>
 
-<script>
-/* ========= ZONE DEFINITIONS (UNCHANGED) ========= */
-const zones = [
-  {id:18,left:79.17824729,right:79.27824729,top:10.88198544,bottom:10.78198544},
-  {id:19,left:79.27824729,right:79.37824729,top:10.88198544,bottom:10.78198544},
-  {id:20,left:79.37824729,right:79.47824729,top:10.88198544,bottom:10.78198544}
-  // (keep your full 53-zone list here)
-];
+  <script>
+    // Global variable to store CSV data
+    let zoneCropMap = {};
 
-/* ========= CSV DATA STORAGE ========= */
-let zoneCropMap = {};
-let watchId = null;
+    // Helper map to associate crop names with icons
+    const iconMapping = {
+      "Finger Millet": "fas fa-wheat-awn",
+      "Little Millet": "fas fa-leaf",
+      "Maize": "fas fa-spa",
+      "Sorghum": "fas fa-seedling",
+      "Black Gram": "fas fa-seedling",
+      "Pigeon Pea": "fas fa-leaf",
+      "Brinjal": "fas fa-leaf",
+      "Paddy": "fas fa-wheat-awn",
+      "Sugarcane": "fas fa-plant-wilt",
+      "Tapioca": "fas fa-mountain"
+    };
 
-/* ========= LOAD CSV (FRONTEND ONLY) ========= */
-function loadCropCSV() {
-  fetch("zone_crops.csv")
-    .then(res => res.text())
-    .then(csv => {
-      const lines = csv.trim().split("\n");
-      lines.shift(); // remove header
+    // Load and Parse CSV
+    function loadCropCSV() {
+      fetch("zone_crops.csv")
+        .then(response => response.text())
+        .then(csvText => {
+          const lines = csvText.split(/\r?\n/).filter(line => line.trim() !== "");
+          lines.shift(); // Remove header
 
-      lines.forEach(line => {
-        const [zone_id, crop_name, icon] = line.split(",");
+          lines.forEach(line => {
+            // Regex to handle potential quotes in CSV
+            const parts = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+            if (parts.length >= 2) {
+              const zoneId = parts[0].trim();
+              let cropsStr = parts[1].trim();
+              
+              // Remove wrapping quotes if they exist
+              if (cropsStr.startsWith('"') && cropsStr.endsWith('"')) {
+                cropsStr = cropsStr.substring(1, cropsStr.length - 1);
+              }
 
-        if (!zoneCropMap[zone_id]) {
-          zoneCropMap[zone_id] = [];
-        }
-
-        zoneCropMap[zone_id].push({
-          name: crop_name,
-          icon: icon || "fas fa-seedling"
+              const cropsArray = cropsStr.split(',').map(c => c.trim());
+              zoneCropMap[zoneId] = cropsArray;
+            }
+          });
+          console.log("CSV Loaded Successfully");
+        })
+        .catch(err => {
+          console.error("Error loading CSV file:", err);
+          document.getElementById("status").innerHTML = '<i class="fas fa-exclamation-triangle"></i> Status: Error loading crop data';
         });
+    }
+
+    // Zone data (53 zones) - [Coordinates preserved from your code]
+    const zones = [
+      {id:1,left:79.37824729,right:79.47824729,top:11.18198544,bottom:11.08198544},
+      {id:2,left:79.47824729,right:79.57824729,top:11.18198544,bottom:11.08198544},
+      {id:3,left:79.17824729,right:79.27824729,top:11.08198544,bottom:10.98198544},
+      {id:4,left:79.27824729,right:79.37824729,top:11.08198544,bottom:10.98198544},
+      {id:5,left:79.37824729,right:79.47824729,top:11.08198544,bottom:10.98198544},
+      {id:6,left:79.47824729,right:79.57824729,top:11.08198544,bottom:10.98198544},
+      {id:7,left:78.87824729,right:78.97824729,top:10.98198544,bottom:10.88198544},
+      {id:8,left:78.97824729,right:79.07824729,top:10.98198544,bottom:10.88198544},
+      {id:9,left:79.07824729,right:79.17824729,top:10.98198544,bottom:10.88198544},
+      {id:10,left:79.17824729,right:79.27824729,top:10.98198544,bottom:10.88198544},
+      {id:11,left:79.27824729,right:79.37824729,top:10.98198544,bottom:10.88198544},
+      {id:12,left:79.37824729,right:79.47824729,top:10.98198544,bottom:10.88198544},
+      {id:13,left:79.47824729,right:79.57824729,top:10.98198544,bottom:10.88198544},
+      {id:14,left:78.77824729,right:78.87824729,top:10.88198544,bottom:10.78198544},
+      {id:15,left:78.87824729,right:78.97824729,top:10.88198544,bottom:10.78198544},
+      {id:16,left:78.97824729,right:79.07824729,top:10.88198544,bottom:10.78198544},
+      {id:17,left:79.07824729,right:79.17824729,top:10.88198544,bottom:10.78198544},
+      {id:18,left:79.17824729,right:79.27824729,top:10.88198544,bottom:10.78198544},
+      {id:19,left:79.27824729,right:79.37824729,top:10.88198544,bottom:10.78198544},
+      {id:20,left:79.37824729,right:79.47824729,top:10.88198544,bottom:10.78198544},
+      {id:21,left:79.47824729,right:79.57824729,top:10.88198544,bottom:10.78198544},
+      {id:22,left:78.77824729,right:78.87824729,top:10.78198544,bottom:10.68198544},
+      {id:23,left:78.87824729,right:78.97824729,top:10.78198544,bottom:10.68198544},
+      {id:24,left:78.97824729,right:79.07824729,top:10.78198544,bottom:10.68198544},
+      {id:25,left:79.07824729,right:79.17824729,top:10.78198544,bottom:10.68198544},
+      {id:26,left:79.17824729,right:79.27824729,top:10.78198544,bottom:10.68198544},
+      {id:27,left:79.27824729,right:79.37824729,top:10.78198544,bottom:10.68198544},
+      {id:28,left:78.87824729,right:78.97824729,top:10.68198544,bottom:10.58198544},
+      {id:29,left:78.97824729,right:79.07824729,top:10.68198544,bottom:10.58198544},
+      {id:30,left:79.07824729,right:79.17824729,top:10.68198544,bottom:10.58198544},
+      {id:31,left:79.17824729,right:79.27824729,top:10.68198544,bottom:10.58198544},
+      {id:32,left:79.27824729,right:79.37824729,top:10.68198544,bottom:10.58198544},
+      {id:33,left:79.37824729,right:79.47824729,top:10.68198544,bottom:10.58198544},
+      {id:34,left:79.07824729,right:79.17824729,top:10.58198544,bottom:10.48198544},
+      {id:35,left:79.17824729,right:79.27824729,top:10.58198544,bottom:10.48198544},
+      {id:36,left:79.27824729,right:79.37824729,top:10.58198544,bottom:10.48198544},
+      {id:37,left:79.37824729,right:79.47824729,top:10.58198544,bottom:10.48198544},
+      {id:38,left:79.47824729,right:79.57824729,top:10.58198544,bottom:10.48198544},
+      {id:39,left:79.07824729,right:79.17824729,top:10.48198544,bottom:10.38198544},
+      {id:40,left:79.17824729,right:79.27824729,top:10.48198544,bottom:10.38198544},
+      {id:41,left:79.27824729,right:79.37824729,top:10.48198544,bottom:10.38198544},
+      {id:42,left:79.37824729,right:79.47824729,top:10.48198544,bottom:10.38198544},
+      {id:43,left:79.47824729,right:79.57824729,top:10.48198544,bottom:10.38198544},
+      {id:44,left:79.07824729,right:79.17824729,top:10.38198544,bottom:10.28198544},
+      {id:45,left:79.17824729,right:79.27824729,top:10.38198544,bottom:10.28198544},
+      {id:46,left:79.27824729,right:79.37824729,top:10.38198544,bottom:10.28198544},
+      {id:47,left:79.37824729,right:79.47824729,top:10.38198544,bottom:10.28198544},
+      {id:48,left:79.47824729,right:79.57824729,top:10.38198544,bottom:10.28198544},
+      {id:49,left:79.07824729,right:79.17824729,top:10.28198544,bottom:10.18198544},
+      {id:50,left:79.17824729,right:79.27824729,top:10.28198544,bottom:10.18198544},
+      {id:51,left:79.27824729,right:79.37824729,top:10.28198544,bottom:10.18198544},
+      {id:52,left:79.07824729,right:79.17824729,top:10.18198544,bottom:10.08198544},
+      {id:53,left:79.17824729,right:79.27824729,top:10.18198544,bottom:10.08198544}
+    ];
+
+    let watchId = null;
+
+    // Function to check if coordinates are inside a zone
+    function insideZone(lat, lon, z) {
+      return lat >= z.bottom && lat <= z.top && lon >= z.left && lon <= z.right;
+    }
+
+    // Function to calculate distance between coordinates and zone center
+    function distance(lat, lon, z) {
+      const clat = (z.top + z.bottom) / 2;
+      const clon = (z.left + z.right) / 2;
+      return Math.sqrt((lat - clat)**2 + (lon - clon)**2);
+    }
+
+    // Updated dynamic crop recommendation function
+    function showCropRecommendations(zoneId) {
+      const cropsRec = document.getElementById("cropsRecommendation");
+      const cropsGrid = document.getElementById("cropsGrid");
+      const zoneDisplay = document.getElementById("zoneText");
+      
+      const crops = zoneCropMap[zoneId];
+
+      if (!crops || crops.length === 0) {
+        hideCropRecommendations();
+        return;
+      }
+      
+      // Update heading to show current Zone
+      cropsRec.querySelector('h3').innerHTML = `<i class="fas fa-seedling"></i> Crops for Zone ${zoneId}`;
+      
+      // Clear any existing crops
+      cropsGrid.innerHTML = "";
+      
+      // Add crops from CSV mapping in 2x2 grid
+      crops.forEach(cropName => {
+        const cropElement = document.createElement("div");
+        cropElement.className = "crop-item";
+        
+        // Find icon or default to seedling
+        const iconClass = iconMapping[cropName] || "fas fa-seedling";
+        
+        cropElement.innerHTML = `
+          <div class="crop-icon"><i class="${iconClass}"></i></div>
+          <div class="crop-name">${cropName}</div>
+        `;
+        cropsGrid.appendChild(cropElement);
       });
-
-      console.log("CSV Loaded:", zoneCropMap);
-    })
-    .catch(err => console.error("CSV Load Error", err));
-}
-
-/* ========= ZONE CHECK ========= */
-function insideZone(lat, lon, z) {
-  return lat >= z.bottom && lat <= z.top &&
-         lon >= z.left && lon <= z.right;
-}
-
-/* ========= SHOW CROPS ========= */
-function showCropRecommendations(zoneId) {
-  const crops = zoneCropMap[zoneId];
-  const rec = document.getElementById("cropsRecommendation");
-  const grid = document.getElementById("cropsGrid");
-  const title = document.getElementById("cropTitle");
-
-  if (!crops || crops.length === 0) {
-    rec.style.display = "none";
-    return;
-  }
-
-  title.innerHTML = `<i class="fas fa-seedling"></i> Crops for Zone ${zoneId}`;
-  grid.innerHTML = "";
-
-  crops.forEach(c => {
-    grid.innerHTML += `
-      <div class="crop-item">
-        <div class="crop-icon"><i class="${c.icon}"></i></div>
-        <div>${c.name}</div>
-      </div>`;
-  });
-
-  rec.style.display = "block";
-}
-
-function hideCropRecommendations() {
-  document.getElementById("cropsRecommendation").style.display = "none";
-}
-
-/* ========= GEO TRACKING ========= */
-function startTracking() {
-  watchId = navigator.geolocation.watchPosition(pos => {
-    const lat = pos.coords.latitude;
-    const lon = pos.coords.longitude;
-
-    document.getElementById("location").innerHTML =
-      `<b>Location:</b> Lat: ${lat.toFixed(6)}, Lon: ${lon.toFixed(6)}`;
-
-    let found = null;
-    for (let z of zones) {
-      if (insideZone(lat, lon, z)) {
-        found = z;
-        break;
+      
+      // Show the recommendations section with animation
+      cropsRec.style.display = "block";
+      cropsRec.style.animation = "slideUp 1s ease-out";
+      
+      // Highlight logic (Permanent for Zone 18, temporary for others)
+      if (parseInt(zoneId) === 18) {
+        zoneDisplay.classList.add("zone-18-highlight");
+      } else {
+        zoneDisplay.classList.remove("zone-18-highlight");
+        zoneDisplay.classList.add("highlight-zone");
+        setTimeout(() => {
+          zoneDisplay.classList.remove("highlight-zone");
+        }, 3000);
       }
     }
 
-    if (found) {
-      document.getElementById("zoneText").innerHTML =
-        `<b>Zone:</b> ${found.id}`;
-      showCropRecommendations(found.id);
-    } else {
-      document.getElementById("zoneText").innerHTML =
-        `<b>Zone:</b> Not Found`;
-      hideCropRecommendations();
+    // Function to hide crop recommendations
+    function hideCropRecommendations() {
+      const cropsRec = document.getElementById("cropsRecommendation");
+      cropsRec.style.display = "none";
+      
+      // Remove Zone 18 highlight
+      const zoneDisplay = document.getElementById("zoneText");
+      zoneDisplay.classList.remove("zone-18-highlight");
     }
 
-    document.getElementById("status").innerText = "Status: Tracking live";
-  });
-}
+    // Main tracking function
+    function startTracking() {
+      if (!navigator.geolocation) {
+        alert("Geolocation is not supported by your browser.");
+        return;
+      }
 
-function stopTracking() {
-  if (watchId) navigator.geolocation.clearWatch(watchId);
-  document.getElementById("status").innerText = "Status: Stopped";
-  hideCropRecommendations();
-}
+      document.getElementById("status").innerHTML = '<i class="fas fa-sync-alt fa-spin"></i> Status: Accessing location...';
 
-/* ========= INIT ========= */
-document.addEventListener("DOMContentLoaded", loadCropCSV);
-</script>
+      watchId = navigator.geolocation.watchPosition(
+        position => {
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
 
+          // SINGLE LINE location display
+          document.getElementById("location").innerHTML = `
+            <strong><i class="fas fa-map-marker-alt"></i> Location:</strong> 
+            Lat: ${lat.toFixed(6)}, Lon: ${lon.toFixed(6)}
+          `;
+
+          let foundZone = null;
+
+          // Check if inside any zone
+          for (let zone of zones) {
+            if (insideZone(lat, lon, zone)) {
+              foundZone = zone;
+              break;
+            }
+          }
+
+          if (foundZone) {
+            const zoneDisplay = document.getElementById("zoneText");
+            zoneDisplay.innerHTML = `<i class="fas fa-map"></i> You are at Zone ${foundZone.id}`;
+            
+            // DYNAMIC CALL based on detected Zone ID
+            showCropRecommendations(foundZone.id);
+            
+          } else {
+            // Find nearest zone
+            let nearestZone = zones[0];
+            let minDistance = distance(lat, lon, zones[0]);
+
+            for (let zone of zones) {
+              let d = distance(lat, lon, zone);
+              if (d < minDistance) {
+                minDistance = d;
+                nearestZone = zone;
+              }
+            }
+
+            document.getElementById("zoneText").innerHTML = 
+              `<i class="fas fa-map"></i> You are at Zone ${nearestZone.id}`;
+            
+            // DYNAMIC CALL for nearest zone
+            showCropRecommendations(nearestZone.id);
+          }
+
+          document.getElementById("status").innerHTML = '<i class="fas fa-check-circle"></i> Status: Tracking live';
+        },
+        error => {
+          console.error("Geolocation error:", error);
+          document.getElementById("status").innerHTML = `<i class="fas fa-exclamation-triangle"></i> Status: Error - ${error.message}`;
+        },
+        {
+          enableHighAccuracy: true,
+          maximumAge: 10000,
+          timeout: 5000
+        }
+      );
+    }
+
+    // Function to stop tracking
+    function stopTracking() {
+      if (watchId !== null) {
+        navigator.geolocation.clearWatch(watchId);
+        watchId = null;
+        document.getElementById("status").innerHTML = '<i class="fas fa-pause-circle"></i> Status: Tracking stopped';
+        hideCropRecommendations();
+      }
+    }
+
+    // Initialize the page
+    document.addEventListener('DOMContentLoaded', function() {
+      // Load the CSV data when the page is ready
+      loadCropCSV();
+
+      const board = document.querySelector('.wooden-board');
+      board.style.animation = 'boardAppear 1s ease-out';
+    });
+  </script>
 </body>
 </html>
