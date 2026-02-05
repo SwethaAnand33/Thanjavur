@@ -321,6 +321,18 @@ body::before {
   50% { transform: scale(1.01); } /* Smaller pulse */
 }
 
+/* Warning Text for Outside Zones */
+.zone-warning {
+  font-size: 0.8rem;
+  color: #D32F2F;
+  background: #FFEBEE;
+  padding: 5px;
+  border-radius: 5px;
+  margin-bottom: 8px;
+  font-weight: bold;
+  display: none; /* Hidden by default */
+}
+
 /* Status Display - SMALLER */
 .status-display {
   font-size: 0.85rem; /* Smaller */
@@ -578,7 +590,7 @@ body::before {
       </div>
 
       <div class="controls">
-        <button class="button" id="startBtn" onclick="startTracking()">
+        <button class="button" id="startBtn" onclick="requestPermissionAndStart()">
           <i class="fas fa-play-circle"></i> Start Tracking
         </button>
         <button class="button" id="stopBtn" onclick="stopTracking()">
@@ -590,6 +602,10 @@ body::before {
         <div class="location-info" id="location">
           <strong><i class="fas fa-map-marker-alt"></i> Location:</strong> 
           Lat: --, Lon: --
+        </div>
+
+        <div class="zone-warning" id="zoneWarning">
+          <i class="fas fa-exclamation-circle"></i> You are not within the defined zones of Thanjavur.
         </div>
 
         <div class="zone-display" id="zoneText">
@@ -636,13 +652,11 @@ body::before {
           lines.shift(); // Remove header
 
           lines.forEach(line => {
-            // Regex to handle potential quotes in CSV
             const parts = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
             if (parts.length >= 2) {
               const zoneId = parts[0].trim();
               let cropsStr = parts[1].trim();
               
-              // Remove wrapping quotes if they exist
               if (cropsStr.startsWith('"') && cropsStr.endsWith('"')) {
                 cropsStr = cropsStr.substring(1, cropsStr.length - 1);
               }
@@ -659,7 +673,7 @@ body::before {
         });
     }
 
-    // Zone data (53 zones) - [Coordinates preserved from your code]
+    // Zone data (53 zones)
     const zones = [
       {id:1,left:79.37824729,right:79.47824729,top:11.18198544,bottom:11.08198544},
       {id:2,left:79.47824729,right:79.57824729,top:11.18198544,bottom:11.08198544},
@@ -718,23 +732,21 @@ body::before {
 
     let watchId = null;
 
-    // Function to check if coordinates are inside a zone
     function insideZone(lat, lon, z) {
       return lat >= z.bottom && lat <= z.top && lon >= z.left && lon <= z.right;
     }
 
-    // Function to calculate distance between coordinates and zone center
     function distance(lat, lon, z) {
       const clat = (z.top + z.bottom) / 2;
       const clon = (z.left + z.right) / 2;
       return Math.sqrt((lat - clat)**2 + (lon - clon)**2);
     }
 
-    // Updated dynamic crop recommendation function
-    function showCropRecommendations(zoneId) {
+    function showCropRecommendations(zoneId, isNearest = false) {
       const cropsRec = document.getElementById("cropsRecommendation");
       const cropsGrid = document.getElementById("cropsGrid");
       const zoneDisplay = document.getElementById("zoneText");
+      const warning = document.getElementById("zoneWarning");
       
       const crops = zoneCropMap[zoneId];
 
@@ -742,19 +754,17 @@ body::before {
         hideCropRecommendations();
         return;
       }
+
+      // Display warning if it's the nearest zone, not the actual zone
+      warning.style.display = isNearest ? "block" : "none";
       
-      // Update heading to show current Zone
-      cropsRec.querySelector('h3').innerHTML = `<i class="fas fa-seedling"></i> Crops for Zone ${zoneId}`;
+      cropsRec.querySelector('h3').innerHTML = `<i class="fas fa-seedling"></i> Crops for ${isNearest ? 'Nearest ' : ''}Zone ${zoneId}`;
       
-      // Clear any existing crops
       cropsGrid.innerHTML = "";
       
-      // Add crops from CSV mapping in 2x2 grid
       crops.forEach(cropName => {
         const cropElement = document.createElement("div");
         cropElement.className = "crop-item";
-        
-        // Find icon or default to seedling
         const iconClass = iconMapping[cropName] || "fas fa-seedling";
         
         cropElement.innerHTML = `
@@ -764,11 +774,9 @@ body::before {
         cropsGrid.appendChild(cropElement);
       });
       
-      // Show the recommendations section with animation
       cropsRec.style.display = "block";
       cropsRec.style.animation = "slideUp 1s ease-out";
       
-      // Highlight logic (Permanent for Zone 18, temporary for others)
       if (parseInt(zoneId) === 18) {
         zoneDisplay.classList.add("zone-18-highlight");
       } else {
@@ -780,23 +788,32 @@ body::before {
       }
     }
 
-    // Function to hide crop recommendations
     function hideCropRecommendations() {
       const cropsRec = document.getElementById("cropsRecommendation");
       cropsRec.style.display = "none";
-      
-      // Remove Zone 18 highlight
+      document.getElementById("zoneWarning").style.display = "none";
       const zoneDisplay = document.getElementById("zoneText");
       zoneDisplay.classList.remove("zone-18-highlight");
     }
 
-    // Main tracking function
-    function startTracking() {
+    // Explicitly triggers the browser location permission prompt
+    function requestPermissionAndStart() {
       if (!navigator.geolocation) {
         alert("Geolocation is not supported by your browser.");
         return;
       }
 
+      // Prompt for permission via currentPosition first to ensure immediate response
+      navigator.geolocation.getCurrentPosition(
+        () => startTracking(),
+        (err) => {
+          console.error("Permission denied", err);
+          document.getElementById("status").innerHTML = `<i class="fas fa-lock"></i> Permission Denied. Please allow location in browser settings.`;
+        }
+      );
+    }
+
+    function startTracking() {
       document.getElementById("status").innerHTML = '<i class="fas fa-sync-alt fa-spin"></i> Status: Accessing location...';
 
       watchId = navigator.geolocation.watchPosition(
@@ -804,7 +821,6 @@ body::before {
           const lat = position.coords.latitude;
           const lon = position.coords.longitude;
 
-          // SINGLE LINE location display
           document.getElementById("location").innerHTML = `
             <strong><i class="fas fa-map-marker-alt"></i> Location:</strong> 
             Lat: ${lat.toFixed(6)}, Lon: ${lon.toFixed(6)}
@@ -812,7 +828,6 @@ body::before {
 
           let foundZone = null;
 
-          // Check if inside any zone
           for (let zone of zones) {
             if (insideZone(lat, lon, zone)) {
               foundZone = zone;
@@ -821,14 +836,9 @@ body::before {
           }
 
           if (foundZone) {
-            const zoneDisplay = document.getElementById("zoneText");
-            zoneDisplay.innerHTML = `<i class="fas fa-map"></i> You are at Zone ${foundZone.id}`;
-            
-            // DYNAMIC CALL based on detected Zone ID
-            showCropRecommendations(foundZone.id);
-            
+            document.getElementById("zoneText").innerHTML = `<i class="fas fa-map"></i> You are at Zone ${foundZone.id}`;
+            showCropRecommendations(foundZone.id, false);
           } else {
-            // Find nearest zone
             let nearestZone = zones[0];
             let minDistance = distance(lat, lon, zones[0]);
 
@@ -843,8 +853,7 @@ body::before {
             document.getElementById("zoneText").innerHTML = 
               `<i class="fas fa-map"></i> You are at Zone ${nearestZone.id}`;
             
-            // DYNAMIC CALL for nearest zone
-            showCropRecommendations(nearestZone.id);
+            showCropRecommendations(nearestZone.id, true);
           }
 
           document.getElementById("status").innerHTML = '<i class="fas fa-check-circle"></i> Status: Tracking live';
@@ -855,13 +864,12 @@ body::before {
         },
         {
           enableHighAccuracy: true,
-          maximumAge: 10000,
+          maximumAge: 0, // Force fresh location
           timeout: 5000
         }
       );
     }
 
-    // Function to stop tracking
     function stopTracking() {
       if (watchId !== null) {
         navigator.geolocation.clearWatch(watchId);
@@ -871,11 +879,8 @@ body::before {
       }
     }
 
-    // Initialize the page
     document.addEventListener('DOMContentLoaded', function() {
-      // Load the CSV data when the page is ready
       loadCropCSV();
-
       const board = document.querySelector('.wooden-board');
       board.style.animation = 'boardAppear 1s ease-out';
     });
